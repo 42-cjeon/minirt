@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera.h                                           :+:      :+:    :+:   */
+/*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/06 15:20:06 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/06 19:48:14 by cjeon            ###   ########.fr       */
+/*   Created: 2022/02/07 11:58:53 by cjeon             #+#    #+#             */
+/*   Updated: 2022/02/07 12:01:09 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAMERA_H
-# define CAMERA_H
+#ifndef MINIRT_H
+# define MINIRT_H
 
-# include <math.h>
-# include "vector3.h"
-
-# define ASPECT_RATIO (16.0 / 9.0)
-# define WINDOW_W (1920.0)
-# define WINDOW_H (WINDOW_W / ASPECT_RATIO)
-# define FOV_W (M_PI * (2.0 / 3.0))
-# define FOW_H (FOV_W / ASPECT_RATIO)
-
-typedef struct s_camera
+enum e_minirt_status
 {
-	t_point3	origin;
-	t_vector3	dir;
-	double		fov;
-}	t_camera;
+	RT_SUCCESS,
+	RT_ERR_ARG,
+	RT_ERR_FILE,
+	RT_ERR_SYSCALL
+};
 
 #endif

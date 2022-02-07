@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:41:18 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/06 22:48:40 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/07 15:40:35 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ struct s_vector3
 	double	y;
 	double	z;
 };
+
+typedef struct s_range
+{
+	int		closed;
+	double	min;
+	double	max;
+}							t_range;
 
 typedef struct s_vector3	t_vector3;
 typedef struct s_vector3	t_color3;
@@ -35,5 +42,6 @@ double		v3_length(t_vector3 v);
 double		v3_dot(t_vector3 u, t_vector3 v);
 t_vector3	v3_reflect(t_vector3 ray, t_vector3 axis);
 t_vector3	v3_rotate(t_vector3 dir, t_vector3 ea);
+int			is_in_range(double d, t_range range);
 
 #endif

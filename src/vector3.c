@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:47:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/06 22:45:52 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/07 15:43:36 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ t_vector3	v3_reflect(t_vector3 ray, t_vector3 axis)
 t_vector3	v3_rotate(t_vector3 dir, t_vector3 ea)
 {
 	t_vector3		new_dir;
-	const double	rotate_matrix[3][3] = \
+	const double	r[3][3] = \
 	{
 		{
 			cos(ea.y) * cos(ea.z), \
@@ -148,4 +148,20 @@ t_vector3	v3_rotate(t_vector3 dir, t_vector3 ea)
 	new_dir.y = r[1][0] * dir.x + r[1][1] * dir.y + r[1][2] * dir.z;
 	new_dir.z = r[2][0] * dir.x + r[2][1] * dir.y + r[2][2] * dir.z;
 	return (new_dir);
+}
+
+int is_in_range(double d, t_range range)
+{
+	if (range.closed)
+	{
+		if (range.min <= d && d <= range.max)
+			return (1);
+		return (0);
+	}
+	else
+	{
+		if (range.min < d && d < range.max)
+			return (1);
+		return (0);
+	}
 }

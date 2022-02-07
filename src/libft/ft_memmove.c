@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   objects.h                                          :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/06 19:35:38 by cjeon            ###   ########.fr       */
+/*   Created: 2021/11/09 21:06:40 by cjeon             #+#    #+#             */
+/*   Updated: 2021/11/13 16:50:37 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OBJECTS_H
-# define OBJECTS_H
+#include "libft.h"
 
-# include "vector3.h"
-
-typedef struct s_phong
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	t_color3	albedo;
-}	t_phong;
+	unsigned char		*d;
+	const unsigned char	*s;
 
-typedef struct s_sphere
-{
-	t_vector3	origin;
-	double		radius;
-	t_phong		phong;
-}	t_sphere;
-
-#endif
+	if (dst < src)
+		ft_memcpy(dst, src, len);
+	else if (dst > src)
+	{
+		d = (unsigned char *)dst + len - 1;
+		s = (const unsigned char *)src + len - 1;
+		while (len--)
+			*d-- = *s--;
+	}
+	return (dst);
+}

@@ -1,0 +1,8 @@
+{
+	"C_Cpp.default.includePath": [
+		"${workspaceFolder}/include"
+	],
+	"files.associations": {
+		"ft_window.h": "c"
+	}
+}
