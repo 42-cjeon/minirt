@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:36:48 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 13:59:30 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/07 19:30:28 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	get_minirt_window(t_window *window)
 	window->image.data = mlx_get_data_addr(window->image.img_ptr, \
 											&window->image.bpp, \
 											&window->image.line_size, \
-											window->image.endian);
+											&window->image.endian);
 	if (!window->image.data || !is_supported_platform(&window->image))
 		return (window_init_fail(window));
 	return (0);

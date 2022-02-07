@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 15:20:06 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 13:24:25 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/07 19:00:41 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ typedef struct s_camera
 	t_vector3	dir;
 	double		fov_w;
 	double		fov_h;
-	double		window_w;
-	double		window_h;
 }	t_camera;
 
 #endif

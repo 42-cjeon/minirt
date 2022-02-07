@@ -6,9 +6,11 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 17:00:47 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/07 20:15:45 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdio.h>
 
 #include <stdlib.h>
 #include <errno.h>
@@ -53,7 +55,7 @@ char *parse_point(char *line, double *d, int is_neg, t_range range)
 
 	if (!ft_isdigit(*line))
 		return (NULL);
-	f = 1;
+	f = 10;
 	while (ft_isdigit(*line))
 	{
 		if (is_neg)
@@ -72,6 +74,7 @@ char *parse_double(char *line, double *d, t_range range)
 {
 	int		is_neg;
 
+	is_neg = 0;
 	*d = 0;
 	if (*line == '-' || *line == '+')
 	{
@@ -104,7 +107,7 @@ int parse_ambient(char *line, t_scene *scene)
 	if (!line)
 		return (1);
 	line = ignore_space(line);
-	line = parse_vector3(line, g_01_range, &scene->gl.ambient);
+	line = parse_vector3(line, g_u8_range, &scene->gl.ambient);
 	if (!line)
 		return (1);
 	return (parse_endl(line));
@@ -162,6 +165,7 @@ int parse_camera(char *line, t_scene *scene)
 	line = parse_double(line, &scene->camera.fov_w, g_fov_range);
 	if (line == NULL)
 		return (1);
+	scene->camera.fov_w = scene->camera.fov_w / 180 * M_PI;
 	scene->camera.fov_h = scene->camera.fov_w / ASPECT_RATIO;
 	return (parse_endl(line));
 }
@@ -224,8 +228,8 @@ char *ignore_space(char *line)
 int parse_line(char *line, t_scene *scene)
 {
 	line = ignore_space(line);
-	if (streq_part(line + 1, "A"))
-		return (parse_ambient(line, scene));
+	if (streq_part(line, "A"))
+		return (parse_ambient(line + 1, scene));
 	else if (streq_part(line, "L"))
 		return (parse_point_light(line + 1, scene));
 	else if (streq_part(line, "C"))
