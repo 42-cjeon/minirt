@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:31:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/08 10:58:44 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:03:36 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "ft_window.h"
 #include "scene.h"
 #include "parser.h"
+#include "objects.h"
 
 void print_vector3(t_vector3 v)
 {
@@ -72,8 +73,8 @@ void print_scene(t_scene *scene)
 	printf("  -ratio : [%lf]\n", scene->gl.ratio);
 	printf("  -color : "); print_color3(scene->gl.ambient);
 	printf("Camera\n");
-	printf("  -origin : "); print_vector3(scene->camera.origin);
-	printf("  -dir    : "); print_vector3(scene->camera.dir);
+	printf("  -origin : "); print_vector3(scene->camera.ray.origin);
+	printf("  -dir    : "); print_vector3(scene->camera.ray.dir);
 	printf("  -fov    : [%lfrad]\n", scene->camera.fov_w);
 	print_objects(scene->obj_list);
 	print_lights(scene->light_list);
@@ -102,7 +103,8 @@ int	main(int argc, char **argv)
 		return (RT_ERR_FILE);
 	if (get_minirt_window(&window))
 		return (RT_ERR_MLX);
-	if (draw_scene(&scene))
+	if (draw_scene(&window, &scene))
 		return (RT_ERR_SYSCALL);
+	mlx_loop(window.mlx_ptr);
 	return (RT_SUCCESS);
 }

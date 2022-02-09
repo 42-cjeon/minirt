@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:41:03 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/08 11:18:17 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:06:28 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 typedef struct s_mlx_image
 {
-	uint32_t	*img_ptr;
-	char		*data;
+	void		*img_ptr;
+	uint32_t	*data;
 	int			bpp;
 	int			line_size;
 	int			endian;
@@ -39,5 +39,7 @@ typedef struct s_window
 	void		*win_ptr;
 	t_mlx_image	image;
 }	t_window;
+
+int	get_minirt_window(t_window *window);
 
 #endif

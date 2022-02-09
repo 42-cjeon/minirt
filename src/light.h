@@ -6,20 +6,25 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:09:56 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 16:30:29 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 15:31:38 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIGHT_H
 # define LIGHT_H
 
-#include "vector3.h"
+# include "vector3.h"
 
 enum e_light_type
 {
 	LIG_SPOT,
 	LIG_POINT
 };
+
+typedef struct s_phong
+{
+	t_color3	albedo;
+}	t_phong;
 
 typedef struct s_point_light
 {

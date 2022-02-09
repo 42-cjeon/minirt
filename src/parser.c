@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 20:15:45 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:23:39 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "utils.h"
 #include "parser.h"
 #include "ft_window.h"
+#include "objects.h"
 
 const static t_range	g_01_range = {1, 0.0, 1.0};
 const static t_range	g_u8_range = {1, 0.0, 255.0};
@@ -110,6 +111,7 @@ int parse_ambient(char *line, t_scene *scene)
 	line = parse_vector3(line, g_u8_range, &scene->gl.ambient);
 	if (!line)
 		return (1);
+	scene->gl.ambient = v3_rescale(scene->gl.ambient, g_u8_range, g_01_range);
 	return (parse_endl(line));
 }
 
@@ -142,6 +144,7 @@ int parse_point_light(char *line, t_scene *scene)
 		free(pl);
 		return (2);
 	}
+	pl->color = v3_rescale(pl->color, g_u8_range, g_01_range);
 	ft_lstadd_front(&scene->light_list, node);
 	return (parse_endl(line));
 }
@@ -154,11 +157,11 @@ int parse_spot_light(char *line, t_scene *scene)
 int parse_camera(char *line, t_scene *scene)
 {
 	line = ignore_space(line);
-	line = parse_vector3(line, g_inf_range, &scene->camera.origin);
+	line = parse_vector3(line, g_inf_range, &scene->camera.ray.origin);
 	if (line == NULL)
 		return (1);
 	line = ignore_space(line);
-	line = parse_vector3(line, g_unit_v3_range, &scene->camera.dir);
+	line = parse_vector3(line, g_unit_v3_range, &scene->camera.ray.dir);
 	if (line == NULL)
 		return (1);
 	line = ignore_space(line);
@@ -200,6 +203,7 @@ int parse_sphere(char *line, t_scene *scene)
 		return (2);
 	}
 	ft_lstadd_front(&scene->obj_list, node);
+	sp->phong.albedo = v3_rescale(sp->phong.albedo, g_u8_range, g_01_range);
 	return (parse_endl(line));
 }
 

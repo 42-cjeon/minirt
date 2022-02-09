@@ -6,11 +6,12 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:23:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 00:48:42 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 15:27:35 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
+#include "objects.h"
 
 typedef struct s_discriminant
 {
@@ -34,6 +35,7 @@ int hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *record)
 	d.d = d.h * d.h - d.a * d.c;
 	if (d.d < 0)
 		return (0);
+	sqrtd = sqrt(d.d);
 	root = (-d.h - sqrtd) / d.a;
 	if (root < 0)
 		root = (-d.h + sqrtd) / d.a;
@@ -44,6 +46,8 @@ int hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *record)
 	record->point = v3_add(v3_mul_scaler(ray.dir, root), ray.origin);
 	record->normal = v3_to_unit(v3_sub(record->point, sphere->origin));
 	record->distence = root;
+	record->phong = sphere->phong;
+	record->object = sphere;
 	return (1);
 }
 
@@ -81,3 +85,14 @@ int	hit_object(t_ray ray, t_list *list, t_hit_record *record)
 	}
 	return (hit_something);
 }
+/*
+t_color3	get_object_color(t_scene *scene, t_hit_record *record)
+{
+	t_color3	color;
+	t_vector3	light_dir;
+
+	v3_mul_scaler(v3_mul(scene->gl.ambient, record->phong.albedo), scene->gl.ratio);
+	while (scene->light_list)
+	light_dir = v3_to_unit(v3_sub(record->point, ));
+}
+*/

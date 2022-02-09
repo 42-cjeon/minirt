@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:36:48 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 19:30:28 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:08:00 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 #include "libft.h"
 #include "utils.h"
 
+#include <stdio.h>
 static int	is_supported_platform(t_mlx_image *img)
 {
 	return (
-		img->bpp == sizeof(uint32_t)
+		img->bpp == sizeof(uint32_t) * 8
 		&& img->endian == MLX_LITTLE_ENDIAN
 	);
 }

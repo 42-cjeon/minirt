@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:47:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 20:06:27 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:21:02 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,4 +164,20 @@ int is_in_range(double d, t_range range)
 			return (1);
 		return (0);
 	}
+}
+
+double	scaler_rescale(double k, t_range from, t_range to)
+{
+	double	std;
+	
+	std = (k - from.min) / (from.max - from.min);
+	return (std * (to.max - to.min) + to.min);
+}
+
+t_vector3	v3_rescale(t_vector3 v, t_range from, t_range to)
+{
+	v.x = scaler_rescale(v.x, from, to);
+	v.y = scaler_rescale(v.y, from, to);
+	v.z = scaler_rescale(v.z, from, to);
+	return (v);
 }
