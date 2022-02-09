@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:31:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 20:28:44 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/08 10:58:44 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,11 @@ int	main(int argc, char **argv)
 	}
 	if (!parse_scene(fd, &scene))
 		print_scene(&scene);
-	return (0);
+	else
+		return (RT_ERR_FILE);
+	if (get_minirt_window(&window))
+		return (RT_ERR_MLX);
+	if (draw_scene(&scene))
+		return (RT_ERR_SYSCALL);
+	return (RT_SUCCESS);
 }

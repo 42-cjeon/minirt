@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.h                                              :+:      :+:    :+:   */
+/*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/07 13:16:31 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 00:16:37 by cjeon            ###   ########.fr       */
+/*   Created: 2022/02/09 00:52:09 by cjeon             #+#    #+#             */
+/*   Updated: 2022/02/09 00:53:56 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAY_H
-# define RAY_H
+#ifndef COLOR_H
+# define COLOR_H
 
-#include "vector3.h"
+# include <stdint.h>
+# include "vector3.h"
 
-typedef struct s_ray
-{
-	t_point3	origin;
-	t_vector3	dir;
-}	t_ray;
-
-typedef struct s_hit_record
-{
-	t_vector3	normal;
-	t_point3	point;
-	t_list		*object;
-	double		distence;
-}	t_hit_record;
+t_color3	v3_lerp(t_color3 from, t_color3 to, double p);
+uint32_t	v3_to_color(t_color3 v);
 
 #endif

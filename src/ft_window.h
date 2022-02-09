@@ -6,13 +6,14 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:41:03 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 13:27:35 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/08 11:18:17 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WINDOW_H
 # define WINDOW_H
 
+#include <stdint.h>
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
@@ -25,11 +26,11 @@
 
 typedef struct s_mlx_image
 {
-	void	*img_ptr;
-	char	*data;
-	int		bpp;
-	int		line_size;
-	int		endian;
+	uint32_t	*img_ptr;
+	char		*data;
+	int			bpp;
+	int			line_size;
+	int			endian;
 }	t_mlx_image;
 
 typedef struct s_window
