@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 16:23:39 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:46:12 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ int	parse_scene(int scene_fd, t_scene *scene)
 {
 	char	*line;
 
-	ft_memset(scene, 0, sizeof(scene));
+	ft_memset(scene, 0, sizeof(t_scene));
 	errno = 0;
 	while (42)
 	{

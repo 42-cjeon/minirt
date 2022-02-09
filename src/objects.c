@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:23:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 15:27:35 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 16:37:49 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	hit_object(t_ray ray, t_list *list, t_hit_record *record)
 	while (list)
 	{
 		if (list->type == OBJ_SPHERE)
-			hit_something |= hit_sphere(ray, list->content, record);
+			hit_something |= hit_sphere(ray, (t_sphere *)list->content, record);
 		if (list->type == OBJ_CYLINDER)
 			hit_something |= hit_cylinder();
 		if (list->type == OBJ_PLANE)

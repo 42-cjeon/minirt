@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:01:22 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 16:24:36 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/09 17:10:05 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 #include "ray.h"
 #include "color.h"
 #include "objects.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 uint32_t	get_pixel_color(t_scene *scene, t_ray ray, double y, double x)
 {
@@ -53,13 +56,15 @@ int	draw_scene(t_window *window, t_scene *scene)
 
 	img = window->image.data;
 	i = 0;
-	j = 0;
 	while (i < WINDOW_HEIGHT)
 	{
+		j = 0;
 		while(j < WINDOW_WIDTH)
 		{
 			ray = get_rotated_ray(scene, i, j);
+			//ray = scene->camera.ray;
 			*img = get_pixel_color(scene, ray, i, j);
+			//exit(10);
 			img++;
 			j++;
 		}
