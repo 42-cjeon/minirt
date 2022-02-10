@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:01:22 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/10 17:58:35 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/10 21:34:30 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ uint32_t	get_pixel_color(t_scene *scene, t_ray ray, double y, double x)
 
 t_ray	get_rotated_ray(const t_scene *scene, double y, double x)
 {
-	const t_vector3	vup = {0, 1, 0};
+	const t_vector3	vup = {0, 0, 1};
 	t_vector3		u;
 	t_vector3		v;
 	t_qt qt;
 	t_qt	ray;
 	t_ray r;
 
-	y = (scene->camera.fov_h / 2) - (scene->camera.fov_h * ((y + 0.5) / WINDOW_HEIGHT));
+	y = (scene->camera.fov_h * ((y + 0.5) / WINDOW_HEIGHT)) - (scene->camera.fov_h / 2);
 	x = (scene->camera.fov_w * ((x + 0.5) / WINDOW_WIDTH)) - (scene->camera.fov_w / 2);
 	/*
 	(scene->camera.fov_h / 2) - (scene->camera.fov_h * (y / WINDOW_HEIGHT))
@@ -67,13 +67,16 @@ t_ray	get_rotated_ray(const t_scene *scene, double y, double x)
 	qt.re = cos(x / 2);
 	qt.im = v3_mul_scaler(v, sin(x / 2));
 	ray.re = 0;
-	ray.im = scene->camera.ray.dir;
+	//ray.im = scene->camera.ray.dir;
 	ray = qt_mul(qt, ray);
 	qt.im = v3_mul_scaler(v, -sin(x / 2));
 	ray = qt_mul(ray, qt);
 
 	r.origin = scene->camera.ray.origin;
 	r.dir = ray.im;
+	
+	//printf("RAY :: from :"); print_vector3(r.origin);
+	//printf("RAY :: to   :"); print_vector3(r.dir);
 	return (r);
 	//printf("ORGINAL :"); print_vector3(scene->camera.ray.dir);
 	//printf("Axis    :"); print_vector3(u);
