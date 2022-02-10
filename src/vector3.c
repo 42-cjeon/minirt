@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:47:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 16:21:02 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/10 19:56:14 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,16 @@ double	v3_dot(t_vector3 u, t_vector3 v)
 	);
 }
 
+t_vector3	v3_cross(t_vector3 u, t_vector3 v)
+{
+	t_vector3	c;
+
+	c.x = u.y * v.z - u.z * v.y;
+	c.y = u.z * v.x - u.x * v.z;
+	c.z = u.x * v.y - u.y * v.x;
+	return (c);
+}
+
 /*
 	ray direction must face to axis
 */
@@ -180,4 +190,16 @@ t_vector3	v3_rescale(t_vector3 v, t_range from, t_range to)
 	v.y = scaler_rescale(v.y, from, to);
 	v.z = scaler_rescale(v.z, from, to);
 	return (v);
+}
+
+t_qt	qt_mul(t_qt p, t_qt q)
+{
+	t_qt	r;
+
+	r.re = p.re * q.re - p.im.x * q.im.x - p.im.y * q.im.y - p.im.z * q.im.z;
+	r.im.x = p.re * q.im.x + p.im.x * q.re + p.im.y * q.im.z - p.im.z * q.im.y;
+	r.im.y = p.re * q.im.y - p.im.x * q.im.z + p.im.y * q.re + p.im.z * q.im.x;
+	r.im.z = p.re * q.im.z + p.im.x * q.im.y - p.im.y * q.im.x + p.im.z * q.re;
+
+	return (r);
 }
