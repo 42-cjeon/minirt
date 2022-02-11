@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:01:22 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/10 21:34:30 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/10 23:35:04 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ uint32_t	get_pixel_color(t_scene *scene, t_ray ray, double y, double x)
 
 t_ray	get_rotated_ray(const t_scene *scene, double y, double x)
 {
-	const t_vector3	vup = {0, 0, 1};
+	const t_vector3	vup = {0, 1, 0};
 	t_vector3		u;
 	t_vector3		v;
 	t_qt qt;

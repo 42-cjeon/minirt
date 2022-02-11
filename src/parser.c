@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 16:46:12 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/11 01:11:23 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,9 +212,38 @@ int parse_cylinder(char *line, t_scene *scene)
 	return (999);
 }
 
+static int parse_plane_fail(t_plane *pl)
+{
+	free(pl);
+	return (1);
+}
+
 int parse_plane(char *line, t_scene *scene)
 {
-	return (999);
+	t_plane	*pl;
+	t_list	*node;
+
+	pl = malloc(sizeof(t_plane));
+	if (pl == NULL)
+		return (2);
+	line = parse_vector3(ignore_space(line), g_inf_range, &pl->origin);
+	if (line == NULL)
+		return (parse_plane_fail(pl));
+	line = parse_vector3(ignore_space(line), g_inf_range, &pl->normal);
+	if (line == NULL)
+		return (parse_plane_fail(pl));
+	line = parse_vector3(ignore_space(line), g_u8_range, &pl->phong.albedo);
+	if (line == NULL)
+		return (parse_plane_fail(pl));
+	node = ft_lstnew(OBJ_PLANE, pl);
+	if (node == NULL)
+	{
+		free(pl);
+		return (2);
+	}
+	ft_lstadd_front(&scene->obj_list, node);
+	pl->phong.albedo = v3_rescale(pl->phong.albedo, g_u8_range, g_01_range);
+	return (parse_endl(line));
 }
 
 int parse_cone(char *line, t_scene *scene)

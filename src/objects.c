@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:23:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 16:37:49 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/11 01:24:26 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,28 @@ int hit_cylinder()
 
 }
 
-int hit_plane()
+#include <stdio.h>
+int hit_plane(t_ray ray, t_plane *plane, t_hit_record *record)
 {
+	double	dist;
+	double	ld;
+	
+	ld = v3_dot(ray.dir, plane->normal);
+	if (ld == 0)
+	{
+		printf("NOT in plane: %.3lf\n", dist);
 
+		return (0);
+	}
+	dist = v3_dot(v3_sub(plane->origin, ray.origin), plane->normal);
+	if (dist < 0 || record->distence <= dist)
+		return (0);
+	record->distence = dist;
+	record->point = v3_add(v3_mul_scaler(ray.dir, dist), ray.origin);
+	record->normal = v3_mul_scaler(plane->normal, -1);
+	record->phong = plane->phong;
+	record->object = plane;
+	return (1);
 }
 
 int hit_cone()
@@ -78,7 +97,7 @@ int	hit_object(t_ray ray, t_list *list, t_hit_record *record)
 		if (list->type == OBJ_CYLINDER)
 			hit_something |= hit_cylinder();
 		if (list->type == OBJ_PLANE)
-			hit_something |= hit_plane();
+			hit_something |= hit_plane(ray, (t_plane *)list->content, record);
 		if (list->type == OBJ_CONE)
 			hit_something |= hit_cone();
 		list = list->next;
