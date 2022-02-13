@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 17:12:46 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/11 15:06:11 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ t_color3	phong_point_light(t_list *objs, t_point_light *light, t_hit_record *rec
 	ray.dir = v3_to_unit(ray.dir);
 	
 	//blocked by object;
+	/*
 	if (hit_object(ray, objs, &shadow_record) && shadow_record.object != record->object && shadow_record.distence < dist)
 	{
 		printf("blocked!\n");
 		return ((t_color3){0, 0, 0});
 	}
+	*/
 	cos_theta = v3_dot(ray.dir, record->normal);
 	if (cos_theta < 0.0)
 		cos_theta = 0;

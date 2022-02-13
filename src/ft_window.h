@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:41:03 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 16:06:28 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/13 16:15:27 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 #include <stdint.h>
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 # define ASPECT_RATIO ((double)WINDOW_WIDTH / WINDOW_HEIGHT)
 
 /*
 # define FOV_W (M_PI * (2.0 / 3.0))
-# define FOW_H (FOV_W / ASPECT_RATIO)
+# define FOW_H (FOV_W / ASPECT_RATIO)s
 */
 
 typedef struct s_mlx_image

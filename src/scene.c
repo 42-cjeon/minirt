@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:01:22 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/10 23:35:04 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/13 16:17:31 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,55 +35,58 @@ uint32_t	get_pixel_color(t_scene *scene, t_ray ray, double y, double x)
 #include <stdio.h>
 #include <stdlib.h>
 
+int v3_equal(t_vector3 u, t_vector3 v)
+{
+	return (
+		u.x == v.x
+		&& u.y == v.y
+		&& u.z == v.z
+	);
+}
+
 t_ray	get_rotated_ray(const t_scene *scene, double y, double x)
 {
-	const t_vector3	vup = {0, 1, 0};
-	t_vector3		u;
-	t_vector3		v;
-	t_qt qt;
-	t_qt	ray;
-	t_ray r;
+	t_vector3	vup;
+	t_vector3	local;
 
-	y = (scene->camera.fov_h * ((y + 0.5) / WINDOW_HEIGHT)) - (scene->camera.fov_h / 2);
-	x = (scene->camera.fov_w * ((x + 0.5) / WINDOW_WIDTH)) - (scene->camera.fov_w / 2);
-	/*
-	(scene->camera.fov_h / 2) - (scene->camera.fov_h * (y / WINDOW_HEIGHT))
+	t_ray		ray;
+	t_vector3	xs;
+	t_vector3	ys;
+	t_vector3	zs;
+	t_vector3	os;
 
-
-	(scene->camera.fov_w * (x / WINDOW_WIDTH)) - (scene->camera.fov_w / 2)
-	*/
-	//y = M_PI / 2;
-	//x = M_PI / 2;
-	u = v3_cross(vup, scene->camera.ray.dir);
-	v = v3_cross(scene->camera.ray.dir, u);
-	qt.re = cos(y / 2);
-	qt.im = v3_mul_scaler(u, sin(y / 2));
-	ray.re = 0;
-	ray.im = scene->camera.ray.dir;
-	ray = qt_mul(qt, ray);
-	qt.im = v3_mul_scaler(u, -sin(y / 2));
-	ray = qt_mul(ray, qt);
-
-	qt.re = cos(x / 2);
-	qt.im = v3_mul_scaler(v, sin(x / 2));
-	ray.re = 0;
-	//ray.im = scene->camera.ray.dir;
-	ray = qt_mul(qt, ray);
-	qt.im = v3_mul_scaler(v, -sin(x / 2));
-	ray = qt_mul(ray, qt);
-
-	r.origin = scene->camera.ray.origin;
-	r.dir = ray.im;
+	if (v3_equal(scene->camera.ray.dir, (t_vector3){0, 1, 0}))
+		vup = (t_vector3){0, 0, -1};
+	else if (v3_equal(scene->camera.ray.dir, (t_vector3){0, -1, 0}))
+		vup = (t_vector3){0, 0, 1};
+	else
+		vup = (t_vector3){0, 1, 0};	
+	//y = (scene->camera.fov_h * ((y + 0.5) / WINDOW_HEIGHT)) - (scene->camera.fov_h / 2);
+	//x = (scene->camera.fov_w * ((x + 0.5) / WINDOW_WIDTH)) - (scene->camera.fov_w / 2);
+	double width = tan(scene->camera.fov_w / 2);
+	double height = tan(scene->camera.fov_h / 2);
 	
-	//printf("RAY :: from :"); print_vector3(r.origin);
-	//printf("RAY :: to   :"); print_vector3(r.dir);
-	return (r);
-	//printf("ORGINAL :"); print_vector3(scene->camera.ray.dir);
-	//printf("Axis    :"); print_vector3(u);
-	//printf("ANGLE   : 90deg\n");
-	//printf("ROTATED :"); print_vector3(ray.im);
-	//exit(1);
-	//return (ray.im);
+	local.y = scaler_rescale(y+0.5, (t_range){1, 0, WINDOW_HEIGHT - 1}, (t_range){1, height, -height});
+	local.x = scaler_rescale(x+0.5, (t_range){1, 0, WINDOW_WIDTH - 1}, (t_range){1, -width, width});
+	local.z = 1;
+
+	xs = v3_cross(vup, scene->camera.ray.dir);
+	ys = v3_cross(scene->camera.ray.dir, xs);
+	zs = scene->camera.ray.dir;
+	os = scene->camera.ray.origin;
+	const double m[4][4] = {
+		{xs.x,xs.y,xs.z,0},
+		{ys.x,ys.y,ys.z,0},
+		{zs.x,zs.y,zs.z,0},
+		{os.x,os.y,os.z,1}
+	};
+	ray.dir.x = local.x * m[0][0] + local.y * m[1][0] + local.z * m[2][0] + m[3][0];
+	ray.dir.y = local.x * m[0][1] + local.y * m[1][1] + local.z * m[2][1] + m[3][1];
+	ray.dir.z = local.x * m[0][2] + local.y * m[1][2] + local.z * m[2][2] + m[3][2];
+	ray.dir = v3_to_unit(ray.dir);
+	ray.origin = os;
+
+	return (ray);
 }
 
 int	draw_scene(t_window *window, t_scene *scene)

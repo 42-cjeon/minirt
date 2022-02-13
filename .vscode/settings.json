@@ -3,6 +3,7 @@
 		"${workspaceFolder}/include"
 	],
 	"files.associations": {
-		"ft_window.h": "c"
+		"ft_window.h": "c",
+		"utils.h": "c"
 	}
 }

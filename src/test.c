@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 15:58:24 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/10 16:12:11 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/13 14:31:06 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 int main(void)
 {
-	const t_vector3 a = {10, 0, 1};
-	const t_vector3 b = {1, 0, 0};
-	const t_vector3 c = v3_cross(b, a);
-
-	printf("<%.3lf, %.3lf, %.3lf>\n", c.x, c.y, c.z);
+	printf("[%lf]\n", scaler_rescale(0.5, (t_range){1, 0, 1}, (t_range){1, -1, 0}));
 	return (0);
 }
