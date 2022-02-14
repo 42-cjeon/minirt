@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:23:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/14 17:55:08 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/14 18:58:39 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,11 @@ int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *record)
 	t_vector3 point = v3_add(v3_mul_scaler(ray.dir, root), ray.origin);
 	t_vector3 h = v3_add(v3_mul_scaler(cylinder->dir, cylinder->height), cylinder->origin);
 	double dd = v3_dot(v3_sub(point, cylinder->origin), h);
-	/*
 	if (dd < 0 || v3_length(h) < dd)
 	{
-	  
+		return (0);
 	}
-	*/
 	record->point = point;
-	t_vector3 cc = v3_mul_scaler(h, 0.5);
 	double t = v3_dot(v3_sub(record->point, cylinder->origin), cylinder->dir);
 	t_vector3 pt = v3_add(cylinder->origin, v3_mul_scaler(cylinder->dir, t));
 	record->normal = v3_to_unit(v3_sub(point, pt));
@@ -101,7 +98,6 @@ int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *record)
 	return (1);
 }
 
-#include <stdio.h>
 int hit_plane(t_ray ray, t_plane *plane, t_hit_record *record)
 {
 	double	dist;
@@ -115,7 +111,10 @@ int hit_plane(t_ray ray, t_plane *plane, t_hit_record *record)
 		return (0);
 	record->distence = dist;
 	record->point = v3_add(v3_mul_scaler(ray.dir, dist), ray.origin);
-	record->normal = plane->normal;
+	if (v3_dot(ray.dir, plane->normal) < 0)
+		record->normal = plane->normal;
+	else
+		record->normal = v3_mul_scaler(plane->normal, -1);
 	record->phong = plane->phong;
 	record->object = plane;
 	return (1);
