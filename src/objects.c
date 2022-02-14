@@ -6,9 +6,11 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:23:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/13 16:33:08 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/14 17:55:08 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdio.h>
 
 #include "scene.h"
 #include "objects.h"
@@ -51,9 +53,52 @@ int hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *record)
 	return (1);
 }
 
-int hit_cylinder()
+int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *record)
 {
+	// LINE : P = L0 + tv;
+	// cy   : (P - C)^2 = (Q - C)^2 + r^2
+	// h_hat = cy.dir;
+	double		a;
+	double		hb;
+	double		c;
+	double		d;
+	double		sqrtd;
+	double		root;
+	t_vector3	w;
 
+	w = v3_sub(ray.origin, cylinder->origin);
+	a = v3_dot(ray.dir, ray.dir) - v3_dot(ray.dir, cylinder->dir) * v3_dot(ray.dir, cylinder->dir);
+	hb = v3_dot(ray.dir, w) - v3_dot(ray.dir, cylinder->dir) * v3_dot(w, cylinder->dir);
+	c = v3_dot(w, w) - v3_dot(w, cylinder->dir) * v3_dot(w, cylinder->dir) - cylinder->diameter;
+	d = hb * hb - a * c;
+	if (d < 0)
+		return (0);
+	sqrtd = sqrt(d);
+	root = (-hb - sqrtd) / a;
+	if (root < 0)
+		root = (-hb + sqrtd) / a;
+	if (root < 0)
+		return (0);
+	if (root >= record->distence)
+		return (0);
+	t_vector3 point = v3_add(v3_mul_scaler(ray.dir, root), ray.origin);
+	t_vector3 h = v3_add(v3_mul_scaler(cylinder->dir, cylinder->height), cylinder->origin);
+	double dd = v3_dot(v3_sub(point, cylinder->origin), h);
+	/*
+	if (dd < 0 || v3_length(h) < dd)
+	{
+	  
+	}
+	*/
+	record->point = point;
+	t_vector3 cc = v3_mul_scaler(h, 0.5);
+	double t = v3_dot(v3_sub(record->point, cylinder->origin), cylinder->dir);
+	t_vector3 pt = v3_add(cylinder->origin, v3_mul_scaler(cylinder->dir, t));
+	record->normal = v3_to_unit(v3_sub(point, pt));
+	record->distence = root;
+	record->phong = cylinder->phong;
+	record->object = cylinder;
+	return (1);
 }
 
 #include <stdio.h>
@@ -64,11 +109,7 @@ int hit_plane(t_ray ray, t_plane *plane, t_hit_record *record)
 	
 	ld = v3_dot(ray.dir, plane->normal);
 	if (ld == 0)
-	{
-//		printf("NOT in plane: %.3lf\n", dist);
-
 		return (0);
-	}
 	dist = v3_dot(v3_sub(plane->origin, ray.origin), plane->normal) / ld;
 	if (dist < 0 || record->distence <= dist)
 		return (0);
@@ -95,7 +136,7 @@ int	hit_object(t_ray ray, t_list *list, t_hit_record *record)
 		if (list->type == OBJ_SPHERE)
 			hit_something |= hit_sphere(ray, (t_sphere *)list->content, record);
 		if (list->type == OBJ_CYLINDER)
-			hit_something |= hit_cylinder();
+			hit_something |= hit_cylinder(ray, (t_cylinder *)list->content, record);
 		if (list->type == OBJ_PLANE)
 			hit_something |= hit_plane(ray, (t_plane *)list->content, record);
 		if (list->type == OBJ_CONE)

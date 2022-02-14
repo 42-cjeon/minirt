@@ -6,10 +6,11 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:31:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 16:52:15 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/14 17:46:29 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <fcntl.h>
 #include <stdio.h>
 
@@ -39,7 +40,17 @@ int	main(int argc, char **argv)
 		return (RT_ERR_FILE);
 	}
 	if (!parse_scene(fd, &scene))
+	{
+		t_cylinder *cy;
+		cy = malloc(sizeof(t_cylinder));
+		cy->diameter = 0.1;
+		cy->height = 10;
+		cy->origin = (t_vector3){0, -0.5, 1};
+		cy->dir = (t_vector3){0, 0, 1};
+		cy->phong = (t_phong){{1,1,1}};
+		ft_lstadd_front(&scene.obj_list, ft_lstnew(OBJ_CYLINDER, cy));
 		print_scene(&scene);
+	}
 	else
 		return (RT_ERR_FILE);
 	if (get_minirt_window(&window))

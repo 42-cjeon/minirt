@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/11 01:05:31 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/14 16:51:26 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,15 @@ typedef struct s_plane
 	t_vector3	normal;	
 	t_phong		phong;
 }	t_plane;
+
+typedef struct s_cylinder
+{
+	t_vector3	origin;
+	t_vector3	dir;
+	double		height;
+	double		diameter;
+	t_phong		phong;
+}	t_cylinder;
 
 int			hit_object(t_ray ray, t_list *list, t_hit_record *record);
 

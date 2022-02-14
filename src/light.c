@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/11 15:06:11 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/14 15:44:41 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_color3	phong_point_light(t_list *objs, t_point_light *light, t_hit_record *rec
 	if (cos_theta < 0.0)
 		cos_theta = 0;
 	color = v3_mul_scaler(v3_mul(light->color, record->phong.albedo), light->ratio * cos_theta);
-	trunc_color(&color);
 	return (color);
 }
 

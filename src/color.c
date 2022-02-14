@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:50:41 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 16:29:37 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/14 15:23:02 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,6 @@ t_color3	v3_lerp(t_color3 from, t_color3 to, double p)
 	);
 }
 
-uint32_t	v3_to_color(t_color3 v)
-{
-	uint32_t	color;
-
-	color = 0;
-	color |= (unsigned char)(0xFF * v.x);
-	color <<= 8;
-	color |= (unsigned char)(0xFF * v.y);
-	color <<= 8;
-	color |= (unsigned char)(0xFF * v.z);
-	return (color);
-}
-
 void	trunc_color(t_vector3 *color)
 {
 	if (color->x < 0)
@@ -50,4 +37,18 @@ void	trunc_color(t_vector3 *color)
 		color->z = 0;
 	else if (1 < color->z)
 		color->z = 1;
+}
+
+uint32_t	v3_to_color(t_color3 v)
+{
+	uint32_t	color;
+
+	trunc_color(&v);
+	color = 0;
+	color |= (unsigned char)(0xFF * v.x);
+	color <<= 8;
+	color |= (unsigned char)(0xFF * v.y);
+	color <<= 8;
+	color |= (unsigned char)(0xFF * v.z);
+	return (color);
 }
