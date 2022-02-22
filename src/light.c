@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/14 15:44:41 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/22 14:14:33 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,17 @@ t_color3	phong_spot_light(t_list *objs, t_spot_light *light, t_hit_record *recor
 	return ((t_color3){0, 1, 1});
 }
 
+int	is_in_shadow(t_ray ray, t_list *objs, double dist)
+{
+	t_hit_record record;
+
+	if (hit_object(ray, objs, &record) && record.distence < dist)
+		return (1);
+	return (0);
+}
+
 t_color3	phong_point_light(t_list *objs, t_point_light *light, t_hit_record *record)
 {
-	t_hit_record	shadow_record;
 	t_ray			ray;
 	double			dist;
 	double			cos_theta;
@@ -36,13 +44,12 @@ t_color3	phong_point_light(t_list *objs, t_point_light *light, t_hit_record *rec
 	ray.dir = v3_to_unit(ray.dir);
 	
 	//blocked by object;
-	/*
-	if (hit_object(ray, objs, &shadow_record) && shadow_record.object != record->object && shadow_record.distence < dist)
+	if (is_in_shadow(ray, objs, dist))
 	{
-		printf("blocked!\n");
+		
 		return ((t_color3){0, 0, 0});
 	}
-	*/
+
 	cos_theta = v3_dot(ray.dir, record->normal);
 	if (cos_theta < 0.0)
 		cos_theta = 0;

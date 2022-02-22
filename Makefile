@@ -43,4 +43,10 @@ fclean : clean
 
 re : fclean all
 
-.PHONY : all clean fclean re
+norm :
+	norminette -v
+	@echo "[-] check miniRT srcs"
+	norminette $(SRCS)
+	@echo "[-] check libft srcs"
+
+.PHONY : all clean fclean re norm

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/13 16:20:06 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/21 13:59:23 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,9 +207,44 @@ int parse_sphere(char *line, t_scene *scene)
 	return (parse_endl(line));
 }
 
+int parse_cylinder_fail(t_cylinder *cy)
+{
+	free(cy);
+	return (1);
+}
+
 int parse_cylinder(char *line, t_scene *scene)
 {
-	return (999);
+	t_cylinder	*cy;
+	t_list		*node;
+
+	cy = malloc(sizeof(t_cylinder));
+	if (cy == NULL)
+		return (2);
+	line = parse_vector3(ignore_space(line), g_inf_range, &cy->origin);
+	if (line == NULL)
+		return (parse_cylinder_fail(cy));
+	line = parse_vector3(ignore_space(line), g_01_range, &cy->dir);
+	if (line == NULL)
+		return (parse_cylinder_fail(cy));
+	line = parse_double(ignore_space(line), &cy->diameter, g_inf_range);
+	if (line == NULL)
+		return (parse_cylinder_fail(cy));
+	line = parse_double(ignore_space(line), &cy->height, g_inf_range);
+	if (line == NULL)
+		return (parse_cylinder_fail(cy));
+	line = parse_vector3(ignore_space(line), g_u8_range, &cy->phong.albedo);
+	if (line == NULL)
+		return (parse_cylinder_fail(cy));
+	node = ft_lstnew(OBJ_CYLINDER, cy);
+	if (node == NULL)
+	{
+		free(cy);
+		return (2);
+	}
+	cy->phong.albedo = v3_rescale(cy->phong.albedo, g_u8_range, g_01_range);
+	ft_lstadd_front(&scene->obj_list, node);
+	return (parse_endl(line));
 }
 
 static int parse_plane_fail(t_plane *pl)

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/14 16:51:26 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/21 01:42:05 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ typedef struct s_cylinder
 	t_phong		phong;
 }	t_cylinder;
 
-int			hit_object(t_ray ray, t_list *list, t_hit_record *record);
+int	hit_object(t_ray ray, t_list *list, t_hit_record *record);
+int	hit_plane(t_ray ray, t_plane *plane, t_hit_record *record);
+int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *record);
+int	hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *record);
 
 #endif

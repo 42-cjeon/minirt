@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:01:22 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/13 16:17:31 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/21 13:38:20 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "color.h"
 #include "objects.h"
 #include "utils.h"
-
+#include "light.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -104,9 +104,8 @@ int	draw_scene(t_window *window, t_scene *scene)
 		while(j < WINDOW_WIDTH)
 		{
 			ray = get_rotated_ray(scene, i, j);
-			//ray = scene->camera.ray;
+			//ray = scene->camera.ray; 
 			*img = get_pixel_color(scene, ray, i, j);
-			//exit(10);
 			img++;
 			j++;
 		}

@@ -4,6 +4,7 @@
 	],
 	"files.associations": {
 		"ft_window.h": "c",
-		"utils.h": "c"
+		"utils.h": "c",
+		"objects.h": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:48:19 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/09 16:52:38 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/21 20:55:46 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	streq_part(const char *heystack, const char *needle)
 
 void print_vector3(t_vector3 v)
 {
-	printf("[x:%.3lf y:%.3lf z:%.3lf ]\n", v.x, v.y, v.z);
+	printf("[x:%+.3lf y:%+.3lf z:%+.3lf]\n", v.x, v.y, v.z);
 }
 
 void print_color3(t_color3 c)

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:23:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/14 18:58:39 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/22 14:14:55 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include "scene.h"
 #include "objects.h"
+
+#define OBJ_CLOSE 0.1
 
 typedef struct s_discriminant
 {
@@ -39,9 +41,9 @@ int hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *record)
 		return (0);
 	sqrtd = sqrt(d.d);
 	root = (-d.h - sqrtd) / d.a;
-	if (root < 0)
+	if (root <= OBJ_CLOSE)
 		root = (-d.h + sqrtd) / d.a;
-	if (root < 0)
+	if (root <= OBJ_CLOSE)
 		return (0);
 	if (root >= record->distence)
 		return (0);
@@ -53,41 +55,18 @@ int hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *record)
 	return (1);
 }
 
-int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *record)
+int check_root(double root, t_ray ray, t_cylinder *cylinder, t_hit_record *record)
 {
-	// LINE : P = L0 + tv;
-	// cy   : (P - C)^2 = (Q - C)^2 + r^2
-	// h_hat = cy.dir;
-	double		a;
-	double		hb;
-	double		c;
-	double		d;
-	double		sqrtd;
-	double		root;
-	t_vector3	w;
-
-	w = v3_sub(ray.origin, cylinder->origin);
-	a = v3_dot(ray.dir, ray.dir) - v3_dot(ray.dir, cylinder->dir) * v3_dot(ray.dir, cylinder->dir);
-	hb = v3_dot(ray.dir, w) - v3_dot(ray.dir, cylinder->dir) * v3_dot(w, cylinder->dir);
-	c = v3_dot(w, w) - v3_dot(w, cylinder->dir) * v3_dot(w, cylinder->dir) - cylinder->diameter;
-	d = hb * hb - a * c;
-	if (d < 0)
+	if (root <= OBJ_CLOSE)
 		return (0);
-	sqrtd = sqrt(d);
-	root = (-hb - sqrtd) / a;
-	if (root < 0)
-		root = (-hb + sqrtd) / a;
-	if (root < 0)
-		return (0);
-	if (root >= record->distence)
+	if (record->distence <= root)
 		return (0);
 	t_vector3 point = v3_add(v3_mul_scaler(ray.dir, root), ray.origin);
-	t_vector3 h = v3_add(v3_mul_scaler(cylinder->dir, cylinder->height), cylinder->origin);
-	double dd = v3_dot(v3_sub(point, cylinder->origin), h);
-	if (dd < 0 || v3_length(h) < dd)
-	{
+	t_vector3 h = v3_sub(v3_add(cylinder->origin, v3_mul_scaler(cylinder->dir, cylinder->height)), cylinder->origin);
+	double dd = v3_dot(v3_sub(point, cylinder->origin), v3_to_unit(h));
+	//printf("dd = %.3lf\n", dd);
+	if (dd < 0 ||  v3_length(h) < dd)
 		return (0);
-	}
 	record->point = point;
 	double t = v3_dot(v3_sub(record->point, cylinder->origin), cylinder->dir);
 	t_vector3 pt = v3_add(cylinder->origin, v3_mul_scaler(cylinder->dir, t));
@@ -95,7 +74,34 @@ int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *record)
 	record->distence = root;
 	record->phong = cylinder->phong;
 	record->object = cylinder;
-	return (1);
+	return (1);//printf(" h = %.3lf\n", v3_length(h));
+	
+}
+
+int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *record)
+{
+	t_vector3	h;
+	t_vector3	w;
+
+	double a, b, c, d, root;
+
+	h = v3_to_unit(v3_sub(v3_add(cylinder->origin, v3_mul_scaler(cylinder->dir, cylinder->height)), cylinder->origin));
+	w = v3_sub(ray.origin, cylinder->origin);
+	a = v3_dot(ray.dir, ray.dir) - v3_dot(ray.dir, h) * v3_dot(ray.dir, h);
+	b =  2 * (v3_dot(ray.dir, w) - v3_dot(ray.dir, h) * v3_dot(w, h));
+	c = v3_dot(w, w) - v3_dot(w, h) * v3_dot(w, h) - cylinder->diameter * cylinder->diameter;
+
+	d = b * b - 4 * a * c;
+	if (d < 0) // there is no root
+		return (0);
+	
+	int result = 0;
+
+	root = (-b - sqrt(d)) / (2 * a);
+	result |= check_root(root, ray, cylinder, record);
+	root = (-b + sqrt(d)) / (2 * a);
+	result |= check_root(root, ray, cylinder, record);
+	return (result);
 }
 
 int hit_plane(t_ray ray, t_plane *plane, t_hit_record *record)
@@ -107,7 +113,7 @@ int hit_plane(t_ray ray, t_plane *plane, t_hit_record *record)
 	if (ld == 0)
 		return (0);
 	dist = v3_dot(v3_sub(plane->origin, ray.origin), plane->normal) / ld;
-	if (dist < 0 || record->distence <= dist)
+	if (dist <= OBJ_CLOSE || record->distence <= dist)
 		return (0);
 	record->distence = dist;
 	record->point = v3_add(v3_mul_scaler(ray.dir, dist), ray.origin);
@@ -129,6 +135,7 @@ int	hit_object(t_ray ray, t_list *list, t_hit_record *record)
 {
 	int	hit_something;
 
+	record->distence = INFINITY;
 	hit_something = 0;
 	while (list)
 	{
