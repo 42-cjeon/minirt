@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:01:22 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 01:12:02 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 02:45:33 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@
 #include "color.h"
 #include "utils.h"
 
-uint32_t	get_pixel_color(t_scene *scene, t_ray ray, double y, double x)
+uint32_t	get_pixel_color(t_scene *scene, const t_ray *ray, double y)
 {
 	t_hit_record	record;
 	t_color3		color_vec;
 
-	record.distence = CAMERA_FAR;
 	if (hit_object(ray, scene->obj_list, &record))
 		color_vec = calc_color(scene, &record);
 	else
@@ -103,7 +102,7 @@ int	draw_scene(t_window *window, t_scene *scene)
 		{
 			ray = get_rotated_ray(scene, i, j);
 			//ray = scene->camera.ray; 
-			*img = get_pixel_color(scene, ray, i, j);
+			*img = get_pixel_color(scene, &ray, i);
 			img++;
 			j++;
 		}

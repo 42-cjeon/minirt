@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 00:43:10 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 02:45:46 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ typedef struct s_cylinder
 	t_shading	shading;
 }	t_cylinder;
 
-int	hit_object(t_ray ray, t_list *list, t_hit_record *record);
-int	hit_plane(t_ray ray, t_plane *plane, t_hit_record *record);
-int	hit_cylinder(t_ray ray, t_cylinder *cylinder, t_hit_record *record);
-int	hit_sphere(t_ray ray, t_sphere *sphere, t_hit_record *record);
+int	hit_object(const t_ray *ray, t_list *list, t_hit_record *record);
+int	hit_plane(const t_ray *ray, t_plane *plane, t_hit_record *record);
+int	hit_cylinder(const t_ray *ray, t_cylinder *cylinder, t_hit_record *record);
+int	hit_sphere(const t_ray *ray, t_sphere *sphere, t_hit_record *record);
 
 #endif

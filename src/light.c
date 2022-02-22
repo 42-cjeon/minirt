@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 01:04:44 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 02:47:07 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_color3	phong_spot_light(t_list *objs, t_spot_light *light, t_hit_record *recor
 	return ((t_color3){0, 1, 1});
 }
 
-int	is_in_shadow(t_ray ray, t_list *objs, double dist)
+int	is_in_shadow(const t_ray *ray, t_list *objs, double dist)
 {
 	t_hit_record record;
 
@@ -42,9 +42,8 @@ t_color3	phong_point_light(t_list *objs, t_point_light *light, t_hit_record *rec
 	ray.dir = v3_to_unit(ray.dir);
 	
 	//blocked by object;
-	if (is_in_shadow(ray, objs, dist))
+	if (is_in_shadow(&ray, objs, dist))
 	{
-		
 		return ((t_color3){0, 0, 0});
 	}
 

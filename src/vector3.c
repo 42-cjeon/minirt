@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:47:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 00:56:08 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 01:57:04 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,16 @@ t_vector3	v3_rotate(t_vector3 dir, t_vector3 ea)
 	new_dir.y = r[1][0] * dir.x + r[1][1] * dir.y + r[1][2] * dir.z;
 	new_dir.z = r[2][0] * dir.x + r[2][1] * dir.y + r[2][2] * dir.z;
 	return (new_dir);
+}
+
+t_range	get_range(enum e_range_type type, double min, double max)
+{
+	t_range	range;
+
+	range.closed = type;
+	range.min = min;
+	range.max = max;
+	return (range);
 }
 
 int is_in_range(double d, t_range range)
