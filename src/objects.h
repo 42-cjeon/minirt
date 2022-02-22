@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/21 01:42:05 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 00:43:10 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 # define OBJECTS_H
 
 # include "vector3.h"
-# include "ray.h"
 # include "libft.h"
-# include "scene.h"
-# include "light.h"
 
 enum e_object_type
 {
@@ -27,18 +24,37 @@ enum e_object_type
 	OBJ_CONE
 };
 
+typedef struct s_shading
+{
+	t_color3	albedo;
+}	t_shading;
+
+typedef struct s_ray
+{
+	t_vector3	origin;
+	t_vector3	dir;
+}	t_ray;
+
+typedef struct s_hit_record
+{
+	t_vector3	normal;
+	t_vector3	point;
+	t_shading	shading;
+	double		distence;
+}	t_hit_record;
+
 typedef struct s_sphere
 {
 	t_vector3	origin;
 	double		radius;
-	t_phong		phong;
+	t_shading	shading;
 }	t_sphere;
 
 typedef struct s_plane
 {
 	t_vector3	origin;
-	t_vector3	normal;	
-	t_phong		phong;
+	t_vector3	dir;	
+	t_shading	shading;
 }	t_plane;
 
 typedef struct s_cylinder
@@ -46,8 +62,8 @@ typedef struct s_cylinder
 	t_vector3	origin;
 	t_vector3	dir;
 	double		height;
-	double		diameter;
-	t_phong		phong;
+	double		radius;
+	t_shading	shading;
 }	t_cylinder;
 
 int	hit_object(t_ray ray, t_list *list, t_hit_record *record);

@@ -6,26 +6,24 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:01:22 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/21 13:38:20 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 01:12:02 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_window.h"
-#include "scene.h"
-#include "ray.h"
-#include "color.h"
-#include "objects.h"
-#include "utils.h"
-#include "light.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+
+#include "scene.h"
+#include "color.h"
+#include "utils.h"
 
 uint32_t	get_pixel_color(t_scene *scene, t_ray ray, double y, double x)
 {
 	t_hit_record	record;
 	t_color3		color_vec;
 
-	record.distence = INFINITY;
+	record.distence = CAMERA_FAR;
 	if (hit_object(ray, scene->obj_list, &record))
 		color_vec = calc_color(scene, &record);
 	else
@@ -55,9 +53,9 @@ t_ray	get_rotated_ray(const t_scene *scene, double y, double x)
 	t_vector3	zs;
 	t_vector3	os;
 
-	if (v3_equal(scene->camera.ray.dir, (t_vector3){0, 1, 0}))
+	if (v3_equal(scene->camera.dir, (t_vector3){0, 1, 0}))
 		vup = (t_vector3){0, 0, -1};
-	else if (v3_equal(scene->camera.ray.dir, (t_vector3){0, -1, 0}))
+	else if (v3_equal(scene->camera.dir, (t_vector3){0, -1, 0}))
 		vup = (t_vector3){0, 0, 1};
 	else
 		vup = (t_vector3){0, 1, 0};	
@@ -70,10 +68,10 @@ t_ray	get_rotated_ray(const t_scene *scene, double y, double x)
 	local.x = scaler_rescale(x+0.5, (t_range){1, 0, WINDOW_WIDTH - 1}, (t_range){1, -width, width});
 	local.z = 1;
 
-	xs = v3_cross(vup, scene->camera.ray.dir);
-	ys = v3_cross(scene->camera.ray.dir, xs);
-	zs = scene->camera.ray.dir;
-	os = scene->camera.ray.origin;
+	xs = v3_cross(vup, scene->camera.dir);
+	ys = v3_cross(scene->camera.dir, xs);
+	zs = scene->camera.dir;
+	os = scene->camera.origin;
 	const double m[4][4] = {
 		{xs.x,xs.y,xs.z,0},
 		{ys.x,ys.y,ys.z,0},

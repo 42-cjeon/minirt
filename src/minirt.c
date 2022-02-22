@@ -6,21 +6,19 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:31:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/21 14:19:01 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 01:11:10 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "minirt.h"
 #include "mlx.h"
-#include "utils.h"
-#include "ft_window.h"
-#include "scene.h"
 #include "parser.h"
-#include "objects.h"
+#include "scene.h"
+#include "utils.h"
 
 int	main(int argc, char **argv)
 {

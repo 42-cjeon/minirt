@@ -6,22 +6,18 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/21 13:59:23 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 01:11:51 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-#include <stdlib.h>
 #include <errno.h>
 #include <math.h>
+#include <stdlib.h>
 
 #include "get_next_line.h"
-#include "libft.h"
-#include "utils.h"
 #include "parser.h"
-#include "ft_window.h"
-#include "objects.h"
+#include "scene.h"
+#include "utils.h"
 
 const static t_range	g_01_range = {1, 0.0, 1.0};
 const static t_range	g_u8_range = {1, 0.0, 255.0};
@@ -104,14 +100,14 @@ char *parse_double(char *line, double *d, t_range range)
 int parse_ambient(char *line, t_scene *scene)
 {
 	line = ignore_space(line);
-	line = parse_double(line, &scene->gl.ratio, g_01_range);
+	line = parse_double(line, &scene->ambient.ratio, g_01_range);
 	if (!line)
 		return (1);
 	line = ignore_space(line);
-	line = parse_vector3(line, g_u8_range, &scene->gl.ambient);
+	line = parse_vector3(line, g_u8_range, &scene->ambient.color);
 	if (!line)
 		return (1);
-	scene->gl.ambient = v3_rescale(scene->gl.ambient, g_u8_range, g_01_range);
+	scene->ambient.color = v3_rescale(scene->ambient.color, g_u8_range, g_01_range);
 	return (parse_endl(line));
 }
 
@@ -157,11 +153,11 @@ int parse_spot_light(char *line, t_scene *scene)
 int parse_camera(char *line, t_scene *scene)
 {
 	line = ignore_space(line);
-	line = parse_vector3(line, g_inf_range, &scene->camera.ray.origin);
+	line = parse_vector3(line, g_inf_range, &scene->camera.origin);
 	if (line == NULL)
 		return (1);
 	line = ignore_space(line);
-	line = parse_vector3(line, g_unit_v3_range, &scene->camera.ray.dir);
+	line = parse_vector3(line, g_unit_v3_range, &scene->camera.dir);
 	if (line == NULL)
 		return (1);
 	line = ignore_space(line);
@@ -193,7 +189,7 @@ int parse_sphere(char *line, t_scene *scene)
 	line = parse_double(ignore_space(line), &sp->radius, g_inf_range);
 	if (line == NULL)
 		return (parse_sphere_fail(sp));
-	line = parse_vector3(ignore_space(line), g_u8_range, &sp->phong.albedo);
+	line = parse_vector3(ignore_space(line), g_u8_range, &sp->shading.albedo);
 	if (line == NULL)
 		return (parse_sphere_fail(sp));
 	node = ft_lstnew(OBJ_SPHERE, sp);
@@ -203,7 +199,7 @@ int parse_sphere(char *line, t_scene *scene)
 		return (2);
 	}
 	ft_lstadd_front(&scene->obj_list, node);
-	sp->phong.albedo = v3_rescale(sp->phong.albedo, g_u8_range, g_01_range);
+	sp->shading.albedo = v3_rescale(sp->shading.albedo, g_u8_range, g_01_range);
 	return (parse_endl(line));
 }
 
@@ -227,13 +223,13 @@ int parse_cylinder(char *line, t_scene *scene)
 	line = parse_vector3(ignore_space(line), g_01_range, &cy->dir);
 	if (line == NULL)
 		return (parse_cylinder_fail(cy));
-	line = parse_double(ignore_space(line), &cy->diameter, g_inf_range);
+	line = parse_double(ignore_space(line), &cy->radius, g_inf_range);
 	if (line == NULL)
 		return (parse_cylinder_fail(cy));
 	line = parse_double(ignore_space(line), &cy->height, g_inf_range);
 	if (line == NULL)
 		return (parse_cylinder_fail(cy));
-	line = parse_vector3(ignore_space(line), g_u8_range, &cy->phong.albedo);
+	line = parse_vector3(ignore_space(line), g_u8_range, &cy->shading.albedo);
 	if (line == NULL)
 		return (parse_cylinder_fail(cy));
 	node = ft_lstnew(OBJ_CYLINDER, cy);
@@ -242,7 +238,7 @@ int parse_cylinder(char *line, t_scene *scene)
 		free(cy);
 		return (2);
 	}
-	cy->phong.albedo = v3_rescale(cy->phong.albedo, g_u8_range, g_01_range);
+	cy->shading.albedo = v3_rescale(cy->shading.albedo, g_u8_range, g_01_range);
 	ft_lstadd_front(&scene->obj_list, node);
 	return (parse_endl(line));
 }
@@ -264,10 +260,10 @@ int parse_plane(char *line, t_scene *scene)
 	line = parse_vector3(ignore_space(line), g_inf_range, &pl->origin);
 	if (line == NULL)
 		return (parse_plane_fail(pl));
-	line = parse_vector3(ignore_space(line), g_inf_range, &pl->normal);
+	line = parse_vector3(ignore_space(line), g_inf_range, &pl->dir);
 	if (line == NULL)
 		return (parse_plane_fail(pl));
-	line = parse_vector3(ignore_space(line), g_u8_range, &pl->phong.albedo);
+	line = parse_vector3(ignore_space(line), g_u8_range, &pl->shading.albedo);
 	if (line == NULL)
 		return (parse_plane_fail(pl));
 	node = ft_lstnew(OBJ_PLANE, pl);
@@ -277,7 +273,7 @@ int parse_plane(char *line, t_scene *scene)
 		return (2);
 	}
 	ft_lstadd_front(&scene->obj_list, node);
-	pl->phong.albedo = v3_rescale(pl->phong.albedo, g_u8_range, g_01_range);
+	pl->shading.albedo = v3_rescale(pl->shading.albedo, g_u8_range, g_01_range);
 	return (parse_endl(line));
 }
 

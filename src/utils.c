@@ -6,13 +6,12 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:48:19 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/21 20:55:46 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 01:08:50 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "scene.h"
-#include "objects.h"
 #include "utils.h"
 #include "libft.h"
 
@@ -74,7 +73,7 @@ void print_sphere(t_sphere *sp)
 	printf("OBJ-SPHERE\n");
 	printf("  -origin : "); print_vector3(sp->origin);
 	printf("  -radius : %lf\n", sp->radius);
-	printf("  -albedo : "); print_vector3(sp->phong.albedo);
+	printf("  -albedo : "); print_vector3(sp->shading.albedo);
 }
 
 void print_point_light(t_point_light *pl)
@@ -108,11 +107,11 @@ void print_lights(t_list *node)
 void print_scene(t_scene *scene)
 {
 	printf("Ambient\n");
-	printf("  -ratio : [%lf]\n", scene->gl.ratio);
-	printf("  -color : "); print_color3(scene->gl.ambient);
+	printf("  -ratio : [%lf]\n", scene->ambient.ratio);
+	printf("  -color : "); print_color3(scene->ambient.color);
 	printf("Camera\n");
-	printf("  -origin : "); print_vector3(scene->camera.ray.origin);
-	printf("  -dir    : "); print_vector3(scene->camera.ray.dir);
+	printf("  -origin : "); print_vector3(scene->camera.origin);
+	printf("  -dir    : "); print_vector3(scene->camera.dir);
 	printf("  -fov    : [%lfrad]\n", scene->camera.fov_w);
 	print_objects(scene->obj_list);
 	print_lights(scene->light_list);

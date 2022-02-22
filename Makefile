@@ -5,8 +5,8 @@ NAME = minirt
 INCLUDE_ROOT = include
 SRCS_ROOT = src
 SRCS := \
-	camera.c color.c ft_window.c \
-	get_next_line.c get_next_line_utils.c light.c minirt.c \
+	color.c ft_window.c light.c minirt.c \
+	get_next_line.c get_next_line_utils.c \
 	objects.c parser.c scene.c utils.c vector3.c
 SRCS := $(addprefix $(SRCS_ROOT)/, $(SRCS))
 OBJS = $(SRCS:.c=.o)

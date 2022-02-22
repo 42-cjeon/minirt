@@ -6,26 +6,23 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 10:19:31 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/07 14:12:16 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 01:12:58 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
-# endif
+# define GNL_BUFFER_SIZE 1024
+# define GNL_TABLE_SIZE 1
 
-# define TABLE_SIZE 1
-
-# include <unistd.h>
-# include <stdlib.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 typedef struct s_buffer
 {
 	size_t			end;
-	unsigned char	data[BUFFER_SIZE];
+	unsigned char	data[GNL_BUFFER_SIZE];
 	struct s_buffer	*next;
 }	t_buffer;
 

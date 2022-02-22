@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 10:19:34 by cjeon             #+#    #+#             */
-/*   Updated: 2021/11/16 13:01:11 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 01:13:06 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_buffer_head	*search_buffer_head(t_buffer_head **hash_table, int fd)
 	t_buffer_head	*curr;
 	t_buffer_head	*prev;
 
-	curr = hash_table[fd % TABLE_SIZE];
+	curr = hash_table[fd % GNL_TABLE_SIZE];
 	prev = NULL;
 	while (curr)
 	{
@@ -59,7 +59,7 @@ t_buffer_head	*search_buffer_head(t_buffer_head **hash_table, int fd)
 	if (curr == NULL)
 		return (NULL);
 	if (prev == NULL)
-		hash_table[fd % TABLE_SIZE] = curr;
+		hash_table[fd % GNL_TABLE_SIZE] = curr;
 	else
 		prev->next = curr;
 	return (curr);
@@ -111,7 +111,7 @@ char	*copy_buffer(t_buffer_head **hash_table, t_buffer_head *head,
 
 char	*get_next_line(int fd)
 {
-	static t_buffer_head	*hash_table[TABLE_SIZE];
+	static t_buffer_head	*hash_table[GNL_TABLE_SIZE];
 	t_buffer_head			*head;
 	ssize_t					read_len;
 	size_t					total_len;

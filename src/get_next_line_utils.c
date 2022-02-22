@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 10:19:39 by cjeon             #+#    #+#             */
-/*   Updated: 2021/11/16 13:04:04 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 01:13:02 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	*free_buffers(t_buffer_head **hash_table, t_buffer_head *head, int fd)
 		free(curr);
 		curr = next;
 	}
-	if (hash_table[fd % TABLE_SIZE] == head)
-		hash_table[fd % TABLE_SIZE] = head->next;
+	if (hash_table[fd % GNL_TABLE_SIZE] == head)
+		hash_table[fd % GNL_TABLE_SIZE] = head->next;
 	else
 	{
-		prev = hash_table[fd % TABLE_SIZE];
+		prev = hash_table[fd % GNL_TABLE_SIZE];
 		while (prev->next != head)
 			prev = prev->next;
 		prev->next = head->next;
@@ -73,7 +73,7 @@ ssize_t	load_buffer(int fd, t_buffer *buffer)
 {
 	ssize_t	len;
 
-	len = read(fd, buffer->data, BUFFER_SIZE);
+	len = read(fd, buffer->data, GNL_BUFFER_SIZE);
 	if (0 < len)
 		buffer->end = len;
 	return (len);
