@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:23:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 02:48:22 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 02:52:08 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,6 @@
 #include <math.h>
 
 #include "scene.h"
-
-typedef struct s_quadratic_eq
-{
-	double	a;
-	double	hb;
-	double	c;
-	double	d;
-}	t_quadratic_eq;
-
-enum e_root_type
-{
-	ROOT_ALPHA,
-	ROOT_BETA
-};
 
 int quad_has_root(t_quadratic_eq *eq)
 {
@@ -149,10 +135,10 @@ int hit_plane(const t_ray *ray, t_plane *plane, t_hit_record *record)
 	
 	ld = v3_dot(ray->dir, plane->dir);
 	if (ld == 0)
-		return (0);
+		return (FALSE);
 	dist = v3_dot(v3_sub(plane->origin, ray->origin), plane->dir) / ld;
-	if (dist <= CAMERA_NEAR || record->distence <= dist)
-		return (0);
+	if (!is_in_range(dist, get_range(RANGE_OPEN, CAMERA_NEAR, record->distence)))
+		return (FALSE);
 	record->distence = dist;
 	record->point = v3_add(v3_mul_scaler(ray->dir, dist), ray->origin);
 	if (v3_dot(ray->dir, plane->dir) < 0)
@@ -160,7 +146,7 @@ int hit_plane(const t_ray *ray, t_plane *plane, t_hit_record *record)
 	else
 		record->normal = v3_mul_scaler(plane->dir, -1);
 	record->shading = plane->shading;
-	return (1);
+	return (TRUE);
 }
 
 int hit_cone()

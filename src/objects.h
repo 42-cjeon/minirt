@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 02:45:46 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 02:52:36 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 
 # include "vector3.h"
 # include "libft.h"
+
+typedef struct s_quadratic_eq
+{
+	double	a;
+	double	hb;
+	double	c;
+	double	d;
+}	t_quadratic_eq;
+
+enum e_root_type
+{
+	ROOT_ALPHA,
+	ROOT_BETA
+};
 
 enum e_object_type
 {
