@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   vector3_scaler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/09 00:52:09 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 18:50:20 by cjeon            ###   ########.fr       */
+/*   Created: 2022/02/23 19:12:59 by cjeon             #+#    #+#             */
+/*   Updated: 2022/02/23 23:23:53 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#include "vector3.h"
 
-# include <stdint.h>
-# include "vector3.h"
+t_vector3	v3_add_scaler(t_vector3 v, double k)
+{
+	v.x += k;
+	v.y += k;
+	v.z += k;
+	return (v);
+}
 
-t_color3	v3_lerp(t_color3 from, t_color3 to, double p);
-uint32_t	v3_to_color(t_color3 v);
-void		trunc_color(t_vector3 *color);
+t_vector3	v3_sub_scaler(t_vector3 v, double k)
+{
+	v.x -= k;
+	v.y -= k;
+	v.z -= k;
+	return (v);
+}
 
-#endif
+t_vector3	v3_mul_scaler(t_vector3 v, double k)
+{
+	v.x *= k;
+	v.y *= k;
+	v.z *= k;
+	return (v);
+}

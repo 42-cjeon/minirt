@@ -6,18 +6,17 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:41:03 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 00:58:40 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 18:55:43 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WINDOW_H
-# define WINDOW_H
+#ifndef FT_WINDOW_H
+# define FT_WINDOW_H
 
-#include <stdint.h>
+# include <stdint.h>
 
-# define WINDOW_WIDTH (800)
-# define WINDOW_HEIGHT (600)
-# define ASPECT_RATIO ((double)WINDOW_WIDTH / WINDOW_HEIGHT)
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
 
 typedef struct s_mlx_image
 {

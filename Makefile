@@ -1,15 +1,22 @@
 CC = cc
-CFLAGS = -Wall -Wextra -g -fsanitize=address -fsanitize=undefined #-Werror
+CFLAGS = -Wall -Wextra #-Werror -g -fsanitize=address -fsanitize=undefined
 
 NAME = minirt
 INCLUDE_ROOT = include
 SRCS_ROOT = src
 SRCS := \
-	color.c ft_window.c light.c minirt.c \
-	get_next_line.c get_next_line_utils.c \
-	objects.c parser.c scene.c utils.c vector3.c
+	color.c ft_window.c light.c get_next_line.c get_next_line_utils.c \
+	math_utils.c minirt.c object_cylinder.c object_plane.c object_sphere.c \
+	object_utils.c objects.c parse_camera.c parse_cylinder.c parse_light.c \
+	parse_plane.c parse_sphere.c parser.c parser_utils.c scene.c utils.c \
+	vector3_complex.c vector3_scaler.c vector3_simple.c vector3_utils.c \
+	scene_ray.c
 SRCS := $(addprefix $(SRCS_ROOT)/, $(SRCS))
 OBJS = $(SRCS:.c=.o)
+INCLUDES := \
+	color.h ft_window.h get_next_line.h light.h minirt.h \
+	objects.h parser.h scene.h utils.h vector3.h
+INCLUDES := $(addprefix $(SRCS_ROOT)/, $(INCLUDES))
 
 LIBFT_ROOT = $(SRCS_ROOT)/libft
 LIBFT = $(LIBFT_ROOT)/libft.a
@@ -44,9 +51,12 @@ fclean : clean
 re : fclean all
 
 norm :
-	norminette -v
-	@echo "[-] check miniRT srcs"
-	norminette $(SRCS)
-	@echo "[-] check libft srcs"
+	@echo "[-] version"
+	@norminette -v
+	@echo "[-] check miniRT"
+	@norminette $(SRCS)
+	@norminette $(INCLUDES)
+	@echo "[-] check libft"
+	@$(MAKE) -C $(LIBFT_ROOT) norm
 
 .PHONY : all clean fclean re norm

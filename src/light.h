@@ -6,12 +6,15 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:09:56 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 00:43:51 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 22:47:19 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIGHT_H
 # define LIGHT_H
+
+# define C1 0.005
+# define C2 0.001
 
 # include "vector3.h"
 

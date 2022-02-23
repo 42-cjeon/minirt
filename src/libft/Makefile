@@ -36,4 +36,8 @@ fclean : clean
 
 re : fclean all
 
-.PHONY: all clean fclean re
+norm :
+	@norminette $(SRCS)
+	@norminette libft.h
+
+.PHONY: all clean fclean re norm

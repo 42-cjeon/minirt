@@ -5,6 +5,9 @@
 	"files.associations": {
 		"ft_window.h": "c",
 		"utils.h": "c",
-		"objects.h": "c"
+		"objects.h": "c",
+		"vector3.h": "c",
+		"scene.h": "c",
+		"libft.h": "c"
 	}
 }

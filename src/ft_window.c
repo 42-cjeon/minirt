@@ -6,19 +6,18 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:36:48 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/10 16:15:40 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 18:51:26 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "mlx.h"
 #include "ft_window.h"
 #include "libft.h"
+#include "mlx.h"
 #include "utils.h"
 
-#include <stdio.h>
 static int	is_supported_platform(t_mlx_image *img)
 {
 	return (

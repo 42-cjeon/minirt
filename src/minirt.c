@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:31:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 01:11:10 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 01:06:56 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,14 @@ int	main(int argc, char **argv)
 		ft_perror("miniRT");
 		return (RT_ERR_FILE);
 	}
-	if (!parse_scene(fd, &scene))
-	{
-		//print_scene(&scene);
-	}
-	else
+	if (parse_scene(fd, &scene))
 		return (RT_ERR_FILE);
 	if (get_minirt_window(&window))
 		return (RT_ERR_MLX);
 	if (draw_scene(&window, &scene))
 		return (RT_ERR_SYSCALL);
-	mlx_put_image_to_window(window.mlx_ptr, window.win_ptr, window.image.img_ptr, 0, 0);
+	mlx_put_image_to_window(window.mlx_ptr, window.win_ptr, \
+							window.image.img_ptr, 0, 0);
 	mlx_loop(window.mlx_ptr);
 	return (RT_SUCCESS);
 }

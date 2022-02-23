@@ -6,12 +6,11 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:50:41 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/14 15:23:02 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 18:50:12 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdint.h>
-#include "vector3.h"
+#include "color.h"
 
 t_color3	v3_lerp(t_color3 from, t_color3 to, double p)
 {

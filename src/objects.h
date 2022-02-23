@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 02:52:36 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/23 22:46:56 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ enum e_object_type
 {
 	OBJ_SPHERE,
 	OBJ_PLANE,
-	OBJ_CYLINDER,
-	OBJ_CONE
+	OBJ_CYLINDER
 };
 
 typedef struct s_shading
@@ -80,9 +79,11 @@ typedef struct s_cylinder
 	t_shading	shading;
 }	t_cylinder;
 
-int	hit_object(const t_ray *ray, t_list *list, t_hit_record *record);
-int	hit_plane(const t_ray *ray, t_plane *plane, t_hit_record *record);
-int	hit_cylinder(const t_ray *ray, t_cylinder *cylinder, t_hit_record *record);
-int	hit_sphere(const t_ray *ray, t_sphere *sphere, t_hit_record *record);
-
+int		quad_has_root(t_quadratic_eq *eq);
+double	quad_get_root(const t_quadratic_eq *eq, enum e_root_type type);
+int		hit_object(const t_ray *ray, t_list *list, t_hit_record *record);
+int		hit_plane(const t_ray *ray, t_plane *plane, t_hit_record *record);
+int		hit_sphere(const t_ray *ray, t_sphere *sphere, t_hit_record *record);
+int		hit_cylinder(const t_ray *ray, t_cylinder *cylinder, \
+						t_hit_record *record);
 #endif
