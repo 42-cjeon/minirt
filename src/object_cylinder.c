@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:09 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 22:51:50 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 14:16:50 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_cylinder_line_root(const t_ray *ray, t_cylinder *cylinder, \
 	double		dd;
 	double		t;
 
-	if (root <= CAMERA_NEAR || record->distence <= root)
+	if (root <= CAMERA_NEAR || record->distance <= root)
 		return (FALSE);
 	point = v3_add(v3_mul_scaler(ray->dir, root), ray->origin);
 	h = v3_mul_scaler(cylinder->dir, cylinder->height);
@@ -33,7 +33,7 @@ int	check_cylinder_line_root(const t_ray *ray, t_cylinder *cylinder, \
 	t = v3_dot(v3_sub(record->point, cylinder->origin), cylinder->dir);
 	pt = v3_add(cylinder->origin, v3_mul_scaler(cylinder->dir, t));
 	record->normal = v3_to_unit(v3_sub(point, pt));
-	record->distence = root;
+	record->distance = root;
 	record->shading = cylinder->shading;
 	return (TRUE);
 }

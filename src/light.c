@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 23:23:22 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 14:16:50 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	is_in_shadow(const t_ray *ray, t_list *objs, double dist)
 {
 	t_hit_record	record;
 
-	if (hit_object(ray, objs, &record) && record.distence < dist)
+	if (hit_object(ray, objs, &record) && record.distance < dist)
 		return (1);
 	return (0);
 }

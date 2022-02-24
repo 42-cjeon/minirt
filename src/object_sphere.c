@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:12 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 23:34:38 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 14:16:50 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	check_sphere_line_root(const t_ray *ray, t_sphere *sphere, \
 							double root, t_hit_record *record)
 {
-	if (root <= CAMERA_NEAR || record->distence <= root)
+	if (root <= CAMERA_NEAR || record->distance <= root)
 		return (FALSE);
 	record->point = v3_add(v3_mul_scaler(ray->dir, root), ray->origin);
 	record->normal = v3_to_unit(v3_sub(record->point, sphere->origin));
-	record->distence = root;
+	record->distance = root;
 	record->shading = sphere->shading;
 	return (TRUE);
 }

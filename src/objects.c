@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:23:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 22:47:00 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 14:16:50 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	hit_object(const t_ray *ray, t_list *list, t_hit_record *record)
 {
 	int	is_hit;
 
-	record->distence = CAMERA_FAR;
+	record->distance = CAMERA_FAR;
 	is_hit = 0;
 	while (list)
 	{
