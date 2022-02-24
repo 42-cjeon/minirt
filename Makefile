@@ -6,12 +6,12 @@
 #    By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/24 18:45:34 by cjeon             #+#    #+#              #
-#    Updated: 2022/02/24 18:46:11 by cjeon            ###   ########.fr        #
+#    Updated: 2022/02/24 20:37:04 by cjeon            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address -fsanitize=undefined
+CFLAGS = -Wall -Wextra -Werror#-g -fsanitize=address -fsanitize=undefined
 
 NAME = minirt
 INCLUDE_ROOT = include
@@ -25,6 +25,7 @@ SRCS := \
 	scene_ray.c parse_general.c mlx_event.c
 SRCS := $(addprefix $(SRCS_ROOT)/, $(SRCS))
 OBJS = $(SRCS:.c=.o)
+DEPS = $(SRCS:.c=.d)
 INCLUDES := \
 	color.h ft_window.h get_next_line.h light.h minirt.h \
 	objects.h parser.h scene.h utils.h vector3.h mlx_event.h
@@ -46,15 +47,17 @@ $(LIBFT) :
 $(MLX) :
 	make -C $(MLX_ROOT) all
 
+-include $(DEPS)
+
 %.o : %.c
-	$(CC) $(CFLAGS) -I$(INCLUDE_ROOT) -c -o $@ $<
+	$(CC) $(CFLAGS) -I$(INCLUDE_ROOT) -MMD -c -o $@ $<
 
 all : $(NAME)
 
 clean :
 	make -C $(MLX_ROOT) clean
 	make -C $(LIBFT_ROOT) clean
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 
 fclean : clean
 	make -C $(LIBFT_ROOT) fclean
