@@ -8,6 +8,7 @@
 		"objects.h": "c",
 		"vector3.h": "c",
 		"scene.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"mlx.h": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 17:43:20 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 18:43:04 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ enum	e_parser_status
 {
 	P_SUCCESS,
 	P_ERR_SYNTEX,
-	P_ERR_SYSCALL
+	P_ERR_SYSCALL,
+	P_END
 };
 
 enum	e_err_type

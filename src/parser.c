@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 18:23:18 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 18:43:48 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	parse_next_line(char *scene_name, int scene_fd, \
 	context->col = 0;
 	context->line = get_next_line(scene_fd);
 	if (!context->line)
-		return (P_ERR_SYSCALL);
+		return (P_END);
 	result = parse_line(context, scene);
 	if (result == P_ERR_SYNTEX)
 		print_parse_error(scene_name, context);
@@ -92,5 +92,7 @@ int	parse_scene(char *scene_name, t_scene *scene)
 		ft_perror("miniRT: parse");
 		return (P_ERR_SYSCALL);
 	}
-	return (P_SUCCESS);
+	if (status == P_END)
+		status = P_SUCCESS;
+	return (status);
 }
