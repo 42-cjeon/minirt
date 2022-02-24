@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra #-Werror -g -fsanitize=address -fsanitize=undefined
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
 NAME = minirt
 INCLUDE_ROOT = include
@@ -10,12 +10,12 @@ SRCS := \
 	object_utils.c objects.c parse_camera.c parse_cylinder.c parse_light.c \
 	parse_plane.c parse_sphere.c parser.c parser_utils.c scene.c utils.c \
 	vector3_complex.c vector3_scaler.c vector3_simple.c vector3_utils.c \
-	scene_ray.c
+	scene_ray.c parse_general.c mlx_event.c
 SRCS := $(addprefix $(SRCS_ROOT)/, $(SRCS))
 OBJS = $(SRCS:.c=.o)
 INCLUDES := \
 	color.h ft_window.h get_next_line.h light.h minirt.h \
-	objects.h parser.h scene.h utils.h vector3.h
+	objects.h parser.h scene.h utils.h vector3.h mlx_event.h
 INCLUDES := $(addprefix $(SRCS_ROOT)/, $(INCLUDES))
 
 LIBFT_ROOT = $(SRCS_ROOT)/libft

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:59 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 23:22:12 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 18:14:01 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,46 +17,42 @@
 static int	parse_sphere_fail(t_sphere *sp)
 {
 	free(sp);
-	return (1);
+	return (P_ERR_SYNTEX);
 }
 
-static char	*parse_sphere_part(char *line, t_sphere *sp)
+static int	parse_sphere_part(t_context *context, t_sphere *sp)
 {
-	line = parse_vector3(ignore_space(line), get_named_range(RNG_INF), \
-							&sp->origin);
-	if (line == NULL)
-		return (NULL);
-	line = parse_double(ignore_space(line), get_named_range(RNG_INF), \
-							&sp->radius);
-	if (line == NULL)
-		return (NULL);
-	line = parse_vector3(ignore_space(line), get_named_range(RNG_COLOR), \
-							&sp->shading.albedo);
-	if (line == NULL)
-		return (NULL);
-	return (line);
+	if (parse_vector3(ignore_space(context), get_named_range(RNG_INF), \
+						&sp->origin))
+		return (throw_error(context, "sphere->origin", P_T_POINT));
+	if (parse_double(ignore_space(context), get_named_range(RNG_INF), \
+						&sp->radius))
+		return (throw_error(context, "sphere->radius", P_T_DOUBLE));
+	if (parse_vector3(ignore_space(context), get_named_range(RNG_COLOR), \
+						&sp->shading.albedo))
+		return (throw_error(context, "sphere->color", P_T_COLOR));
+	return (P_SUCCESS);
 }
 
-int	parse_sphere(char *line, t_scene *scene)
+int	parse_sphere(t_context *context, t_scene *scene)
 {
 	t_sphere	*sp;
 	t_list		*node;
 
 	sp = malloc(sizeof(t_sphere));
 	if (sp == NULL)
-		return (2);
-	line = parse_sphere_part(line, sp);
-	if (line == NULL)
+		return (P_ERR_SYSCALL);
+	if (parse_sphere_part(context, sp))
 		return (parse_sphere_fail(sp));
 	node = ft_lstnew(OBJ_SPHERE, sp);
 	if (node == NULL)
 	{
 		free(sp);
-		return (2);
+		return (P_ERR_SYSCALL);
 	}
 	ft_lstadd_front(&scene->obj_list, node);
 	sp->shading.albedo = v3_rescale(sp->shading.albedo, \
 										get_named_range(RNG_COLOR), \
-										get_named_range(RNG_ZERO_ONE));
-	return (parse_endl(line));
+										get_named_range(RNG_RATIO));
+	return (parse_endl(context));
 }

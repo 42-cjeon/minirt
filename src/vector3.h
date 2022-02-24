@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:41:18 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 22:32:21 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 16:44:47 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ enum e_bool
 
 enum e_range_name
 {
-	RNG_ZERO_ONE,
+	RNG_RATIO,
 	RNG_COLOR,
 	RNG_UNITV,
 	RNG_FOV,

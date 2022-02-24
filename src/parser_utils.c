@@ -5,86 +5,63 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/23 19:35:04 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 00:56:17 by cjeon            ###   ########.fr       */
+/*   Created: 2022/02/24 15:52:10 by cjeon             #+#    #+#             */
+/*   Updated: 2022/02/24 18:14:17 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "utils.h"
 
-char	*ignore_space(char *line)
+char	*context_peek(t_context *context)
 {
-	while (ft_isspace(*line))
-		line++;
-	return (line);
+	return (context->line + context->col);
 }
 
-int	parse_endl(char *line)
+t_context	*context_pop(t_context *context, int k)
 {
-	if (line == NULL)
-		return (1);
-	line = ignore_space(line);
-	if (*line != '\n' && *line != '\0')
-		return (1);
-	return (0);
+	context->col += k;
+	return (context);
 }
 
-char	*parse_vector3(char *line, t_range range, t_vector3 *v)
+t_context	*ignore_space(t_context *context)
 {
-	line = parse_double(line, range, &v->x);
-	if (!line || *line != ',')
-		return (NULL);
-	line = parse_double(line + 1, range, &v->y);
-	if (!line || *line != ',')
-		return (NULL);
-	return (parse_double(line + 1, range, &v->z));
+	while (*context_peek(context) == ' ' || *context_peek(context) == '\t')
+		context->col++;
+	return (context);
 }
 
-char	*parse_point(char *line, double *d, int is_neg, t_range range)
+int	throw_error(t_context *context, char *err_name, int err_type)
 {
-	double	f;
-
-	if (!ft_isdigit(*line))
-		return (NULL);
-	f = 10;
-	while (ft_isdigit(*line))
-	{
-		if (is_neg)
-			*d -= (double)(*line - '0') / f;
-		else
-			*d += (double)(*line - '0') / f;
-		f *= 10;
-		if (!is_in_range(*d, range))
-			return (NULL);
-		line++;
-	}
-	return (line);
+	context->err_name = err_name;
+	context->err_type = err_type;
+	context->fail = TRUE;
+	return (P_ERR_SYNTEX);
 }
 
-char	*parse_double(char *line, t_range range, double *d)
+int	print_parse_error(char *filename, t_context *context)
 {
-	int	is_neg;
+	char		buf[256];
+	const char	*err_types[] = {
+		"color3[0,255]",
+		"point3(-INF,INF)",
+		"vector3[-1,1]",
+		"double(-INF,INF)",
+		"double[0,1]",
+		"double(0,180)",
+		"string"
+	};
 
-	is_neg = 0;
-	*d = 0;
-	if (*line == '-')
-		is_neg = 1;
-	if (*line == '-' || *line == '+')
-		line += 1;
-	if (!ft_isdigit(*line))
-		return (NULL);
-	while (ft_isdigit(*line))
-	{
-		*d *= 10;
-		if (is_neg)
-			*d -= (double)(*line - '0');
-		else
-			*d += (double)(*line - '0');
-		if (!is_in_range(*d, range))
-			return (NULL);
-		line++;
-	}
-	if (*line == '.')
-		return (parse_point(line + 1, d, is_neg, range));
-	return (line);
+	ft_strlcpy(buf, filename, 256);
+	ft_strlcat(buf, ":", 256);
+	ft_strlcat(buf, ft_itoa(context->row + 1), 256);
+	ft_strlcat(buf, ":", 256);
+	ft_strlcat(buf, ft_itoa(context->col + 1), 256);
+	ft_strlcat(buf, ": expected ", 256);
+	ft_strlcat(buf, context->err_name, 256);
+	ft_strlcat(buf, " <TYPE:", 256);
+	ft_strlcat(buf, err_types[context->err_type], 256);
+	ft_strlcat(buf, ">", 256);
+	ft_puterror(buf);
+	return (P_ERR_SYNTEX);
 }

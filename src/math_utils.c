@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:15:51 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 23:23:39 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 15:39:42 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 t_range	get_named_range(enum e_range_name name)
 {
 	const static t_range	named_range[5] = {
-		{1, 0, 1},
-		{1, 0, 255},
-		{1, -1, 1},
-		{1, 0, 180},
-		{1, -INFINITY, INFINITY}
+		{RANGE_CLOSED, 0, 1},
+		{RANGE_CLOSED, 0, 255},
+		{RANGE_CLOSED, -1, 1},
+		{RANGE_OPEN, 0, 180},
+		{RANGE_OPEN, -INFINITY, INFINITY}
 	};
 
 	return (named_range[name]);

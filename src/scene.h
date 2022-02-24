@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:07:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 22:47:47 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/24 14:24:51 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 # define CAMERA_NEAR (1e-5)
 # define CAMERA_FAR (1e+5)
-# define FOCAL_LEN 1.0
+# define FOCAL_LEN 1.5
 
 typedef struct s_camera
 {
