@@ -9,6 +9,7 @@
 		"vector3.h": "c",
 		"scene.h": "c",
 		"libft.h": "c",
-		"mlx.h": "c"
+		"mlx.h": "c",
+		"color.h": "c"
 	}
 }

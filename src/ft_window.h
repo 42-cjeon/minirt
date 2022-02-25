@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:41:03 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 20:38:53 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/25 17:46:12 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct s_mlx_image
 	void		*img_ptr;
 	uint32_t	*data;
 	int			bpp;
+	int			height;
+	int			width;
 	int			line_size;
 	int			endian;
 }	t_mlx_image;

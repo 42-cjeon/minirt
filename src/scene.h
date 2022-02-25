@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:07:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/25 12:34:14 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/25 20:44:06 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include "light.h"
 # include "objects.h"
 
-# define TEXTURE_CB
+# define TEXTURE_IMAGE
+//# define TEXTURE_CB
+//# define SPECULA
 
 # define CAMERA_NEAR (1e-5)
 # define CAMERA_FAR (1e+5)
@@ -46,11 +48,11 @@ typedef struct s_scene
 int					draw_scene(t_window *window, t_scene *scene);
 t_color3			calc_color(t_scene *scene, t_hit_record *record);
 t_color3			get_object_color(t_scene *scene, t_hit_record *record);
-t_vector3			get_global_ray_dir(const t_scene *scene, t_vector3 local);
-t_vector3			get_local_ray_dir(const t_scene *scene, double y, double x);
-t_ray				get_rotated_ray(const t_scene *scene, double y, double x);
-t_transform_matrix	get_transform_matrix(const t_scene *scene, t_vector3 *xs, \
-											t_vector3 *ys);
+t_vector3			get_global_ray_dir(t_scene *scene, t_vector3 local);
+t_vector3			get_local_ray_dir(t_scene *scene, double y, double x);
+t_ray				get_rotated_ray(t_scene *scene, double y, double x);
+t_transform_matrix	get_transform_matrix(t_vector3 *xs, t_vector3 *ys, \
+											t_vector3 *zs, t_vector3 *os);
 t_vector3			get_vup(t_vector3 dir);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:50:41 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 18:50:12 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/25 19:40:46 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,17 @@ uint32_t	v3_to_color(t_color3 v)
 	color <<= 8;
 	color |= (unsigned char)(0xFF * v.z);
 	return (color);
+}
+
+t_vector3	color_to_v3(uint32_t c)
+{
+	t_vector3	v;
+
+	v.z = c % 256;
+	c >>= 8;
+	v.y = c % 256;
+	c >>= 8;
+	v.x = c % 256;
+	return (v3_rescale(v, get_named_range(RNG_COLOR), \
+							get_named_range(RNG_RATIO)));
 }

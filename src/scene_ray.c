@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 22:33:11 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 14:24:01 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/25 20:44:21 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_vector3	get_vup(t_vector3 dir)
 		return (vup[2]);
 }
 
-t_vector3	get_local_ray_dir(const t_scene *scene, double y, double x)
+t_vector3	get_local_ray_dir(t_scene *scene, double y, double x)
 {
 	t_vector3				dir;
 	double					width;
@@ -59,8 +59,8 @@ t_vector3	get_local_ray_dir(const t_scene *scene, double y, double x)
 	return (dir);
 }
 
-t_transform_matrix	get_transform_matrix(const t_scene *scene, t_vector3 *xs, \
-											t_vector3 *ys)
+t_transform_matrix	get_transform_matrix(t_vector3 *xs, t_vector3 *ys, \
+											t_vector3 *zs, t_vector3 *os)
 {
 	static double	m[4][3];
 
@@ -70,16 +70,16 @@ t_transform_matrix	get_transform_matrix(const t_scene *scene, t_vector3 *xs, \
 	m[1][0] = ys->x;
 	m[1][1] = ys->y;
 	m[1][2] = ys->z;
-	m[2][0] = scene->camera.dir.x;
-	m[2][1] = scene->camera.dir.y;
-	m[2][2] = scene->camera.dir.z;
-	m[3][0] = scene->camera.origin.x;
-	m[3][1] = scene->camera.origin.y;
-	m[3][2] = scene->camera.origin.z;
+	m[2][0] = zs->x;
+	m[2][1] = zs->y;
+	m[2][2] = zs->z;
+	m[3][0] = os->x;
+	m[3][1] = os->y;
+	m[3][2] = os->z;
 	return (m);
 }
 
-t_vector3	get_global_ray_dir(const t_scene *scene, t_vector3 local)
+t_vector3	get_global_ray_dir(t_scene *scene, t_vector3 local)
 {
 	t_vector3			vup;
 	t_vector3			xs;
@@ -89,11 +89,12 @@ t_vector3	get_global_ray_dir(const t_scene *scene, t_vector3 local)
 	vup = get_vup(scene->camera.dir);
 	xs = v3_cross(vup, scene->camera.dir);
 	ys = v3_cross(scene->camera.dir, xs);
-	m = get_transform_matrix(scene, &xs, &ys);
+	m = get_transform_matrix(&xs, &ys, &scene->camera.dir, \
+								&scene->camera.origin);
 	return (v3_to_unit(v3_transform(local, m)));
 }
 
-t_ray	get_rotated_ray(const t_scene *scene, double y, double x)
+t_ray	get_rotated_ray(t_scene *scene, double y, double x)
 {
 	t_vector3	local;
 	t_ray		ray;

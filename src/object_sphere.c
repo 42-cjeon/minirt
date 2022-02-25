@@ -6,13 +6,18 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:12 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/25 12:35:52 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/25 21:21:43 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <math.h>
 
+#include "color.h"
 #include "scene.h"
+
+extern t_mlx_image texture;
+extern t_mlx_image nmap;
 
 int	check_sphere_line_root(const t_ray *ray, t_sphere *sphere, \
 							double root, t_hit_record *record)
@@ -23,15 +28,31 @@ int	check_sphere_line_root(const t_ray *ray, t_sphere *sphere, \
 	record->normal = v3_to_unit(v3_sub(record->point, sphere->origin));
 	record->distance = root;
 
+#ifdef TEXTURE_IMAGE
+
 	t_vector3	p = v3_to_unit(v3_sub(record->point, sphere->origin));
+	double u, v;
+	u = (0.5 + (atan2(p.x, p.z) / (2 * M_PI)));
+	v = (0.5 - (asin(p.y) / M_PI));
+	
+	//printf("U=%.3lf, V=%.3lf\n", u, v);
+	//printf("X=%d, Y=%d\n", (int)(u * (texture.width - 1)), (int)(v * (texture.height - 1)));
+	uint32_t k = texture.data[(int)(v * (texture.height - 1)) * texture.width + (int)(u * (texture.width - 1))];
+	record->shading.albedo = color_to_v3(k);
+	/*
+	uint32_t bump_map = nmap.data[(int)(v * (texture.height - 1)) * texture.width + (int)(u * (texture.width - 1))];
+	t_vector3 bm = v3_to_unit(v3_sub_scaler(v3_mul_scaler(color_to_v3(bump_map), 2), 1));
+	t_vector3	tn = v3_cross(get_vup(record->normal), record->normal);
+	t_vector3	bi = v3_cross(record->normal, tn);
+	record->normal = v3_transform(bm, get_transform_matrix(&tn, &bi, &record->normal, &(t_vector3){0, 0, 0}));
+	v3_to_unit(record->normal);
+	*/
+#elif TEXTURE_CB
 
-#ifdef TEXTURE_CB
-
+	t_vector3	p = v3_to_unit(v3_sub(record->point, sphere->origin));
 	int u, v;
-
-	u = (int)((0.5 + (atan2(p.x, p.z) / (2 * M_PI))) * M_PI * sphere->radius);
+	u = (int)((0.5 + (atan2(p.x, p.z) / (2 * M_PI))) * 2 * M_PI * sphere->radius);
 	v = (int)((0.5 - (asin(p.y) / M_PI)) * M_PI * sphere->radius);
-	//printf("u=%d v=%d\n", u, v);
 	if ((u % 2 == 0 && v % 2 == 0) || (u % 2 == 1 && v % 2 == 1))
 		record->shading.albedo = (t_color3){1, 1, 1};
 	else if  ((u % 2 == 0 && v % 2 == 1) || (u % 2 == 1 && v % 2 == 0))

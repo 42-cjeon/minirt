@@ -6,9 +6,11 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 14:16:50 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/25 19:08:29 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <math.h>
 
 #include "color.h"
 #include "scene.h"
@@ -22,6 +24,9 @@ static int	is_in_shadow(const t_ray *ray, t_list *objs, double dist)
 		return (1);
 	return (0);
 }
+
+# define KS 16
+# define KSS 4096
 
 static t_color3	phong_point_light(t_list *objs, t_point_light *light, \
 								t_hit_record *record)
@@ -40,10 +45,22 @@ static t_color3	phong_point_light(t_list *objs, t_point_light *light, \
 		return (get_vector3(0, 0, 0));
 	cos_theta = v3_dot(ray.dir, record->normal);
 	if (cos_theta < 0.0)
-		cos_theta = 0;
+		return (get_vector3(0, 0, 0));
 	color = v3_mul(light->color, record->shading.albedo);
 	color = v3_mul_scaler(color, light->ratio * cos_theta);
 	color = v3_mul_scaler(color, 1 / (1.0 + C1 * dist + C2 * dist * dist));
+
+#ifdef SPECULA
+
+	t_vector3 refl = v3_reflect(ray.dir, record->normal);
+	double	l = v3_dot(refl, v3_to_unit(record->point));
+	if (l < 0)
+	{
+		color = v3_add(color, v3_mul_scaler(light->color, pow(-l, KSS) * KS));
+	}
+
+#endif
+
 	return (color);
 }
 
