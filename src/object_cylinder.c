@@ -6,9 +6,11 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:09 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 14:16:50 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/25 12:37:14 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <math.h>
 
 #include "scene.h"
 
@@ -34,7 +36,27 @@ int	check_cylinder_line_root(const t_ray *ray, t_cylinder *cylinder, \
 	pt = v3_add(cylinder->origin, v3_mul_scaler(cylinder->dir, t));
 	record->normal = v3_to_unit(v3_sub(point, pt));
 	record->distance = root;
+
+#ifdef TEXTURE_CB
+
+	int u, v;
+	t_vector3 q;
+	q = v3_to_unit(v3_sub(record->point, v3_add(v3_mul_scaler(cylinder->dir, dd), cylinder->origin)));
+
+	u = (int)(((0.5 + (atan2(q.x, q.z) / (2 * M_PI)))) * 2 * M_PI * cylinder->radius);
+	v = dd;
+
+	if ((u % 2 == 0 && v % 2 == 0) || (u % 2 == 1 && v % 2 == 1))
+		record->shading.albedo = (t_color3){1, 1, 1};
+	else if  ((u % 2 == 0 && v % 2 == 1) || (u % 2 == 1 && v % 2 == 0))
+		record->shading.albedo = (t_color3){0, 0, 0};
+
+#else
+
 	record->shading = cylinder->shading;
+
+#endif
+
 	return (TRUE);
 }
 

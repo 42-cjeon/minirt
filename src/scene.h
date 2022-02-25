@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:07:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 20:35:25 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/25 12:34:14 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "libft.h"
 # include "light.h"
 # include "objects.h"
+
+# define TEXTURE_CB
 
 # define CAMERA_NEAR (1e-5)
 # define CAMERA_FAR (1e+5)
