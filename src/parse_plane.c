@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:56 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 18:48:58 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 00:58:53 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	parse_plane(t_context *context)
 	pl = ft_calloc(1, sizeof(t_plane));
 	node = ft_lstnew(OBJ_PLANE, pl);
 	if (node == NULL || pl == NULL)
-		reutrn (parse_plane_fail(pl, node, P_ERR_SYSCALL));
+		return (parse_plane_fail(node, pl, P_ERR_SYSCALL));
 	ft_lstadd_front(&context->scene->obj_list, node);
 	if (parse_plane_part(context, pl))
 		return (P_ERR_SYNTEX);

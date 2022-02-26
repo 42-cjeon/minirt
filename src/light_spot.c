@@ -6,12 +6,23 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:24:20 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 21:35:03 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 01:02:12 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
+
 #include "scene.h"
 #include "light.h"
+
+static int	is_in_shadow(const t_ray *ray, t_list *objs, double dist)
+{
+	t_hit_record	record;
+
+	if (hit_object(ray, objs, &record) && record.distance < dist)
+		return (1);
+	return (0);
+}
 
 t_color3	phong_spot_light(t_scene *scene, t_spot_light *light, \
 								t_hit_record *record, t_color3 color)

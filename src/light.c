@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 21:24:44 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 00:54:26 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,10 @@
 #include "utils.h"
 #include "texture.h"
 
-static int	is_in_shadow(const t_ray *ray, t_list *objs, double dist)
-{
-	t_hit_record	record;
-
-	if (hit_object(ray, objs, &record) && record.distance < dist)
-		return (1);
-	return (0);
-}
-
-t_color3	phong_shading(t_scene *scene, t_list *light, t_hit_record *record)
+t_color3	phong_shading(t_scene *scene, t_list *light, t_hit_record *record, t_color3 color)
 {
 	if (light->type == LIG_SPOT)
-		return (phong_spot_light(scene, (t_spot_light *)light->content, record));
+		return (phong_spot_light(scene, (t_spot_light *)light->content, record, color));
 	return (get_vector3(0.5, 0.5, 0.5));
 }
 
@@ -45,7 +36,7 @@ t_color3	calc_color(t_scene *scene, t_hit_record *record)
 	light = scene->light_list;
 	while (light)
 	{
-		mixed_color = v3_add(mixed_color, phong_shading(scene->obj_list, light, record, surf_color));
+		mixed_color = v3_add(mixed_color, phong_shading(scene, light, record, surf_color));
 		light = light->next;
 	}
 	return (mixed_color);

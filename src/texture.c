@@ -6,12 +6,13 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:27:34 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 20:58:55 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 01:05:54 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
+#include "mlx.h"
 #include "color.h"
 #include "utils.h"
 
@@ -28,7 +29,7 @@ t_mlx_image	*load_xpm_image(t_window *window, char *name)
 		free(img);
 		return (NULL);
 	}
-	img->data = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->line_size, &img->endian);
+	img->data = (uint32_t *)mlx_get_data_addr(img->img_ptr, &img->bpp, &img->line_size, &img->endian);
 	if (img->data == NULL)
 	{
 		free(img);
@@ -78,7 +79,7 @@ t_vector3	get_surf_color(t_scene *scene, t_hit_record *record)
 	{
 		u = (int)(record->shading.u) % 2;
 		v = (int)(record->shading.v) % 2;
-		if (u && v || !u && !v)
+		if ((u && v) || (!u && !v))
 			return (get_vector3(0, 0, 0));
 		else
 			return (get_vector3(1, 1, 1));
@@ -102,7 +103,7 @@ void	handle_nmap(t_scene	*scene, t_hit_record *record)
 
 	if (record->shading.nmap_name == NULL)
 		return ;
-	nmap = search_texture(scene->texture_list, record->shading.nmap_name, TXT_NMAP);
+	nmap = search_texture(scene, record->shading.nmap_name, TXT_NMAP);
 	nm = v3_sub_scaler(v3_mul_scaler(color_to_v3(get_texture_pixel(nmap, record->shading.u, record->shading.v)), 2), 1);
 	tn = v3_cross(get_vup(record->normal), record->normal);
 	bi = v3_cross(record->normal, tn);

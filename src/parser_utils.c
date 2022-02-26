@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 15:52:10 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 15:31:11 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 01:00:08 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	throw_error(t_context *context, char *err_name, int err_type)
 {
 	context->err_name = err_name;
 	context->err_type = err_type;
-	context->fail = TRUE;
 	return (P_ERR_SYNTEX);
 }
 

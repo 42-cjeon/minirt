@@ -6,7 +6,7 @@
 #    By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/24 18:45:34 by cjeon             #+#    #+#              #
-#    Updated: 2022/02/26 01:05:42 by cjeon            ###   ########.fr        #
+#    Updated: 2022/02/27 01:01:53 by cjeon            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,13 @@ NAME = minirt
 INCLUDE_ROOT = include
 SRCS_ROOT = src
 SRCS := \
-	color.c ft_window.c light.c get_next_line.c get_next_line_utils.c \
-	math_utils.c minirt.c object_cylinder.c object_plane.c object_sphere.c \
-	object_utils.c objects.c parse_camera.c parse_cylinder.c parse_light.c \
-	parse_plane.c parse_sphere.c parser.c parser_utils.c scene.c utils.c \
-	vector3_complex.c vector3_scaler.c vector3_simple.c vector3_utils.c \
-	scene_ray.c parse_general.c mlx_event.c
+	color.c ft_window.c get_next_line.c get_next_line_utils.c light.c \
+	light_spot.c math_utils.c minirt.c mlx_event.c object_cylinder.c \
+	object_plane.c object_sphere.c object_utils.c objects.c \
+	parse_camera.c parse_cylinder.c parse_general.c parse_light.c \
+	parse_plane.c parse_shading.c parse_sphere.c parser.c parser_utils.c \
+	scene.c scene_ray.c texture.c utils.c vector3_complex.c vector3_scaler.c \
+	vector3_simple.c vector3_utils.c
 SRCS := $(addprefix $(SRCS_ROOT)/, $(SRCS))
 OBJS = $(SRCS:.c=.o)
 DEPS = $(SRCS:.c=.d)

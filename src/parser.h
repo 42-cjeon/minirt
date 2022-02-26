@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 18:48:03 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 00:59:42 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			parse_ambient(t_context *context);
 int			parse_camera(t_context *context);
 int			parse_cylinder(t_context *context);
 int			parse_plane(t_context *context);
-int			parse_point_light(t_context *context);
+int			parse_spot_light(t_context *context);
 int			parse_sphere(t_context *context);
 int			parse_scene(char *scene_name, t_scene *scene, t_window *window);
 int			print_parse_error(char *filename, t_context *context);

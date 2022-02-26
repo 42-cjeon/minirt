@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:07 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 19:47:08 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 00:56:42 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	get_plane_uv(t_plane *plane, t_hit_record *record)
 	t_vector3	nz;
 	//t_vector3	d;
 
-	nz = v3_cross(nx, plane->dir);
 	nx = get_vup(plane->dir);
+	nz = v3_cross(nx, plane->dir);
 
 	//d = v3_sub(record->point, plane->origin);
 	if (plane->shading.surf_type == SURF_CB)

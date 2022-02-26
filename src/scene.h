@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:07:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 20:19:29 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 00:52:54 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,8 @@ t_ray		get_rotated_ray(t_scene *scene, double y, double x);
 t_tmat		get_transform_matrix(t_vector3 *xs, t_vector3 *ys, \
 									t_vector3 *zs, t_vector3 *os);
 t_vector3	get_vup(t_vector3 dir);
+
+t_color3	phong_spot_light(t_scene *scene, t_spot_light *light, \
+								t_hit_record *record, t_color3 color);
 
 #endif

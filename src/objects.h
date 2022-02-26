@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 20:19:05 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 01:03:47 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ enum e_surf_type
 typedef union u_surf
 {
 	t_color3	albedo;
-	const char	*texture_name;
+	char		*texture_name;
 }	t_surf;
 
 typedef struct s_shading
 {
 	int			surf_type;
 	t_surf		surf;
-	const char	*nmap_name;
+	char		*nmap_name;
 	double		ks;
 	int			kss;
 	double		u;

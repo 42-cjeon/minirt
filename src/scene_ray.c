@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 22:33:11 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 20:10:07 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 01:00:43 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_vector3	get_local_ray_dir(t_scene *scene, double y, double x)
 	return (dir);
 }
 
-t_transform_matrix	get_transform_matrix(t_vector3 *xs, t_vector3 *ys, \
+t_tmat	get_transform_matrix(t_vector3 *xs, t_vector3 *ys, \
 											t_vector3 *zs, t_vector3 *os)
 {
 	static double	m[4][3];

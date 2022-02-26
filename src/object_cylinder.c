@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:09 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 20:17:08 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 00:56:23 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "scene.h"
 
-void	get_cylineder_uv(t_cylinder *cylinder, t_hit_record *record, double dd)
+void	get_cylinder_uv(t_cylinder *cylinder, t_hit_record *record, double dd)
 {	
 	record->shading.u = 0.5 + atan2(record->normal.x, record->normal.z) / (2 * M_PI);
 	record->shading.v = dd;
@@ -45,7 +45,7 @@ int	check_cylinder_line_root(const t_ray *ray, t_cylinder *cylinder, \
 	record->normal = v3_to_unit(v3_sub(point, pt));
 	record->distance = root;
 	record->shading = cylinder->shading;
-	get_cylinder_uv(cylinder, dd, record);
+	get_cylinder_uv(cylinder, record, dd);
 	return (TRUE);
 }
 

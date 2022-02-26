@@ -10,6 +10,7 @@
 		"scene.h": "c",
 		"libft.h": "c",
 		"mlx.h": "c",
-		"color.h": "c"
+		"color.h": "c",
+		"math.h": "c"
 	}
 }

@@ -6,9 +6,11 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:53:39 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 20:50:12 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 01:04:09 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdlib.h>
 
 #include "ft_window.h"
 #include "parser.h"
@@ -28,15 +30,13 @@ int add_texture(t_context *context, int type, char *name)
 		free(img);
 		return (P_ERR_SYSCALL);
 	}
-	ft_lstadd_front(&context->scene->texture_list, img);
+	ft_lstadd_front(&context->scene->texture_list, node);
 	return (P_SUCCESS);
 }
 
 int	parse_texture(t_context *context, int type, char **pstr)
 {
 	int			start;
-	t_list		*node;
-	t_mlx_image	*img;
 
 	start = context->col;
 	while (*context_peek(context) && !(ft_isspace(*context_peek(context))))

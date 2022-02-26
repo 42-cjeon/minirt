@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 17:45:41 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 00:57:32 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	parse_cylinder_parts(t_context *context, t_cylinder *cy)
 	return (P_SUCCESS);
 }
 
-int	parse_cylinder(t_context *context, t_scene *scene)
+int	parse_cylinder(t_context *context)
 {
 	t_cylinder	*cy;
 	t_list		*node;
@@ -48,7 +48,7 @@ int	parse_cylinder(t_context *context, t_scene *scene)
 	node = ft_lstnew(OBJ_CYLINDER, cy);
 	if (cy == NULL || node == NULL)
 		return (parse_cylinder_fail(node, cy, P_ERR_SYSCALL));
-	ft_lstadd_front(&scene->obj_list, node);	
+	ft_lstadd_front(&context->scene->obj_list, node);	
 	if (parse_cylinder_parts(context, cy))
 		return (P_ERR_SYNTEX);
 	failure = parse_shading(context, &cy->shading);
