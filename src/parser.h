@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 02:31:13 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 18:48:03 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,20 @@ enum	e_err_type
 	P_T_DOUBLE,
 	P_T_RATIO,
 	P_T_FOV,
-	P_T_STR
+	P_T_STR,
+	P_T_WINDOW,
+	P_T_POS
 };
 
 typedef struct s_context
 {
-	char	*line;
-	int		row;
-	int		col;
-	int		fail;
-	int		err_type;
-	char	*err_name;
-
+	char		*line;
+	int			row;
+	int			col;
+	int			err_type;
+	char		*err_name;
+	t_window	*window;
+	t_scene		*scene;
 }	t_context;
 
 t_context	*ignore_space(t_context *context);
@@ -54,14 +56,15 @@ int			parse_double(t_context *context, t_range range, double *d);
 int			parse_int(t_context *context, t_range range, int *k);
 int			parse_endl(t_context *context);
 int			parse_vector3(t_context *context, t_range range, t_vector3 *v);
-int			parse_ambient(t_context *context, t_scene *scene);
-int			parse_camera(t_context *context, t_scene *scene);
-int			parse_cylinder(t_context *context, t_scene *scene);
-int			parse_plane(t_context *context, t_scene *scene);
-int			parse_point_light(t_context *context, t_scene *scene);
-int			parse_sphere(t_context *context, t_scene *scene);
-int			parse_scene(char *scene_name, t_scene *scene);
+int			parse_ambient(t_context *context);
+int			parse_camera(t_context *context);
+int			parse_cylinder(t_context *context);
+int			parse_plane(t_context *context);
+int			parse_point_light(t_context *context);
+int			parse_sphere(t_context *context);
+int			parse_scene(char *scene_name, t_scene *scene, t_window *window);
 int			print_parse_error(char *filename, t_context *context);
 int			throw_error(t_context *context, char *err_name, int err_type);
+int			parse_shading(t_context *context, t_shading *shading);
 
 #endif

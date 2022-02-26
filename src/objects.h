@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 14:16:50 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 20:19:05 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,34 @@ enum e_object_type
 	OBJ_CYLINDER
 };
 
-typedef struct s_shading
+enum e_texture_type
+{
+	TXT_TEXTURE = 1,
+	TXT_NMAP
+};
+
+enum e_surf_type
+{
+	SURF_TEXTURE = 1,
+	SURF_COLOR,
+	SURF_CB
+};
+
+typedef union u_surf
 {
 	t_color3	albedo;
+	const char	*texture_name;
+}	t_surf;
+
+typedef struct s_shading
+{
+	int			surf_type;
+	t_surf		surf;
+	const char	*nmap_name;
+	double		ks;
+	int			kss;
+	double		u;
+	double		v;
 }	t_shading;
 
 typedef struct s_ray

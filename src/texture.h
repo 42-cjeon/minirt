@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.h                                            :+:      :+:    :+:   */
+/*   texture.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/07 12:09:56 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 21:03:38 by cjeon            ###   ########.fr       */
+/*   Created: 2022/02/26 20:46:36 by cjeon             #+#    #+#             */
+/*   Updated: 2022/02/26 20:59:09 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIGHT_H
-# define LIGHT_H
+#ifndef TEXTURE_H
+# define TEXTURE_H
 
-# include "vector3.h"
+# include "scene.h"
 
-enum e_light_type
-{
-	LIG_SPOT
-};
-
-typedef struct s_ambient
-{
-	t_color3	color;
-	double		ratio;
-}	t_ambient;
-
-typedef struct s_spot_light
-{
-	t_vector3	origin;
-	t_color3	color;
-	t_vector3	dir;
-	double		theta;
-	double		ratio;
-}	t_spot_light;
+void		handle_nmap(t_scene	*scene, t_hit_record *record);
+uint32_t	get_texture_pixel(t_mlx_image *img, double u, double v);
+t_mlx_image	*search_texture(t_scene *scene, char *name, int type);
+t_mlx_image	*load_xpm_image(t_window *window, char *name);
+t_vector3	get_surf_color(t_scene *scene, t_hit_record *record);
 
 #endif

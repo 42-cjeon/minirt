@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 18:12:34 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 17:45:41 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 #include "parser.h"
 
-static int	parse_cylinder_fail(t_cylinder *cy)
+static int	parse_cylinder_fail(t_list *node, t_cylinder *cy, int result)
 {
 	free(cy);
-	return (P_ERR_SYNTEX);
+	free(node);
+	return (result);
 }
 
 static int	parse_cylinder_parts(t_context *context, t_cylinder *cy)
@@ -34,9 +35,6 @@ static int	parse_cylinder_parts(t_context *context, t_cylinder *cy)
 	if (parse_double(ignore_space(context), get_named_range(RNG_INF), \
 						&cy->height))
 		return (throw_error(context, "cylinder->height", P_T_DOUBLE));
-	if (parse_vector3(ignore_space(context), get_named_range(RNG_COLOR), \
-						&cy->shading.albedo))
-		return (throw_error(context, "cylinder->color", P_T_COLOR));
 	return (P_SUCCESS);
 }
 
@@ -44,21 +42,17 @@ int	parse_cylinder(t_context *context, t_scene *scene)
 {
 	t_cylinder	*cy;
 	t_list		*node;
+	int			failure;
 
-	cy = malloc(sizeof(t_cylinder));
-	if (cy == NULL)
-		return (P_ERR_SYSCALL);
-	if (parse_cylinder_parts(context, cy))
-		return (parse_cylinder_fail(cy));
+	cy = ft_calloc(1, sizeof(t_cylinder));
 	node = ft_lstnew(OBJ_CYLINDER, cy);
-	if (node == NULL)
-	{
-		free(cy);
-		return (P_ERR_SYSCALL);
-	}
-	cy->shading.albedo = v3_rescale(cy->shading.albedo, \
-										get_named_range(RNG_COLOR), \
-										get_named_range(RNG_RATIO));
-	ft_lstadd_front(&scene->obj_list, node);
+	if (cy == NULL || node == NULL)
+		return (parse_cylinder_fail(node, cy, P_ERR_SYSCALL));
+	ft_lstadd_front(&scene->obj_list, node);	
+	if (parse_cylinder_parts(context, cy))
+		return (P_ERR_SYNTEX);
+	failure = parse_shading(context, &cy->shading);
+	if (failure)
+		return (failure);
 	return (parse_endl(context));
 }

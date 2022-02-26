@@ -6,18 +6,18 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:41:18 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 16:44:47 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 20:12:02 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR3_H
 # define VECTOR3_H
 
-enum e_bool
+typedef enum e_bool
 {
 	FALSE = 0,
 	TRUE = 1
-};
+}	t_bool;
 
 enum e_range_name
 {
@@ -25,7 +25,8 @@ enum e_range_name
 	RNG_COLOR,
 	RNG_UNITV,
 	RNG_FOV,
-	RNG_INF
+	RNG_INF,
+	RNG_POS
 };
 
 struct s_vector3
@@ -50,7 +51,7 @@ typedef struct s_range
 
 typedef struct s_vector3	t_vector3;
 typedef struct s_vector3	t_color3;
-typedef double (*t_transform_matrix)[3];
+typedef double (*t_tmat)[3];
 
 t_vector3	get_vector3(double x, double y, double z);
 int			v3_equal(t_vector3 u, t_vector3 v);
@@ -71,6 +72,6 @@ t_range		get_range(enum e_range_type type, double min, double max);
 int			is_in_range(double d, t_range range);
 t_vector3	v3_rescale(t_vector3 v, t_range from, t_range to);
 double		scaler_rescale(double k, t_range from, t_range to);
-t_vector3	v3_transform(t_vector3 v, const t_transform_matrix m);
+t_vector3	v3_transform(t_vector3 v, const t_tmat m);
 
 #endif

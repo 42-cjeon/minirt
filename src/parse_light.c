@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:48 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 18:14:55 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 18:59:27 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 #include "parser.h"
 
-int	parse_ambient(t_context *context, t_scene *scene)
+int	parse_ambient(t_context *context)
 {
 	if (parse_double(ignore_space(context), get_named_range(RNG_RATIO), \
-						&scene->ambient.ratio))
+						&context->scene->ambient.ratio))
 		return (throw_error(context, "ambient->ratio", P_T_RATIO));
 	if (parse_vector3(ignore_space(context), get_named_range(RNG_COLOR), \
-						&scene->ambient.color))
+						&context->scene->ambient.color))
 		return (throw_error(context, "ambient->color", P_T_COLOR));
-	scene->ambient.color = v3_rescale(scene->ambient.color, \
-										get_named_range(RNG_COLOR), \
-										get_named_range(RNG_RATIO));
+	context->scene->ambient.color = \
+		v3_rescale(context->scene->ambient.color, \
+			get_named_range(RNG_COLOR), \
+			get_named_range(RNG_RATIO));
 	return (parse_endl(context));
 }
 
@@ -48,7 +49,7 @@ static int	parse_point_light_part(t_context *context, t_point_light *pl)
 	return (P_SUCCESS);
 }
 
-int	parse_point_light(t_context *context, t_scene *scene)
+int	parse_point_light(t_context *context)
 {
 	t_point_light	*pl;
 	t_list			*node;
@@ -67,6 +68,6 @@ int	parse_point_light(t_context *context, t_scene *scene)
 	pl->color = v3_rescale(pl->color, \
 							get_named_range(RNG_COLOR), \
 							get_named_range(RNG_RATIO));
-	ft_lstadd_front(&scene->light_list, node);
+	ft_lstadd_front(&context->scene->light_list, node);
 	return (parse_endl(context));
 }

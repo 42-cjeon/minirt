@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:15:51 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 15:39:42 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 15:27:34 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_range	get_named_range(enum e_range_name name)
 		{RANGE_CLOSED, 0, 255},
 		{RANGE_CLOSED, -1, 1},
 		{RANGE_OPEN, 0, 180},
-		{RANGE_OPEN, -INFINITY, INFINITY}
+		{RANGE_OPEN, -INFINITY, INFINITY},
+		{RANGE_CLOSED, 0, INFINITY}
 	};
 
 	return (named_range[name]);

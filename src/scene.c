@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 11:01:22 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 23:23:47 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 20:26:45 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static uint32_t	get_pixel_color(t_scene *scene, const t_ray *ray, double y)
 	if (hit_object(ray, scene->obj_list, &record))
 		color_vec = calc_color(scene, &record);
 	else
-		color_vec = v3_lerp(skybox[0], skybox[1], y / WINDOW_HEIGHT);
+		color_vec = v3_lerp(skybox[0], skybox[1], y / scene->window_height);
 	return (v3_to_color(color_vec));
 }
 
@@ -43,10 +43,10 @@ int	draw_scene(t_window *window, t_scene *scene)
 
 	img = window->image.data;
 	i = 0;
-	while (i < WINDOW_HEIGHT)
+	while (i < scene->window_height)
 	{
 		j = 0;
-		while (j < WINDOW_WIDTH)
+		while (j < scene->window_width)
 		{
 			ray = get_rotated_ray(scene, i, j);
 			*img = get_pixel_color(scene, &ray, i);

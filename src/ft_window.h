@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:41:03 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/25 17:46:12 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 20:48:10 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 
 # include <stdint.h>
 
-# define WINDOW_WIDTH 800
-# define WINDOW_HEIGHT 600
-
 typedef struct s_mlx_image
 {
+	char		*name;
 	void		*img_ptr;
 	uint32_t	*data;
 	int			bpp;
@@ -36,6 +34,6 @@ typedef struct s_window
 	t_mlx_image	image;
 }	t_window;
 
-int	get_minirt_window(t_window *window);
+int			get_minirt_window(int width, int height, t_window *window);
 
 #endif

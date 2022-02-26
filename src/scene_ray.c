@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 22:33:11 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/25 20:44:21 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 20:10:07 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ t_vector3	get_vup(t_vector3 dir)
 
 t_vector3	get_local_ray_dir(t_scene *scene, double y, double x)
 {
-	t_vector3				dir;
-	double					width;
-	double					height;
-	const static t_range	window_range[2] = {
-		{RANGE_CLOSED, 0, WINDOW_WIDTH - 1},
-		{RANGE_CLOSED, 0, WINDOW_HEIGHT - 1}
-	};
+	t_vector3	dir;
+	double		width;
+	double		height;
+	double		fov_h;
 
-	width = tan(scene->camera.fov_w / 2) * FOCAL_LEN;
-	height = tan(scene->camera.fov_h / 2) * FOCAL_LEN;
-	dir.x = scaler_rescale(x + 0.5, window_range[0], \
+	width = tan(scene->camera.fov_w / 2) * scene->camera.focal_len;
+	fov_h = scene->camera.fov_w * scene->window_height / scene->window_width;
+	height = tan(fov_h / 2) * scene->camera.focal_len;
+	dir.x = scaler_rescale(x + 0.5, \
+				get_range(RANGE_CLOSED, 0, scene->window_width - 1), \
 				get_range(RANGE_CLOSED, -width, width));
-	dir.y = scaler_rescale(y + 0.5, window_range[1], \
+	dir.y = scaler_rescale(y + 0.5, \
+				get_range(RANGE_CLOSED, 0, scene->window_height - 1), \
 				get_range(RANGE_CLOSED, height, -height));
 	dir.z = 1;
 	return (dir);
@@ -84,7 +84,7 @@ t_vector3	get_global_ray_dir(t_scene *scene, t_vector3 local)
 	t_vector3			vup;
 	t_vector3			xs;
 	t_vector3			ys;
-	t_transform_matrix	m;
+t_tmat	m;
 
 	vup = get_vup(scene->camera.dir);
 	xs = v3_cross(vup, scene->camera.dir);

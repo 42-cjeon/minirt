@@ -6,12 +6,9 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:36:48 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 18:51:26 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 20:48:48 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdint.h>
-#include <stdlib.h>
 
 #include "ft_window.h"
 #include "libft.h"
@@ -40,18 +37,18 @@ static int	window_init_fail(t_window *window)
 	return (1);
 }
 
-int	get_minirt_window(t_window *window)
+int	get_minirt_window(int width, int height, t_window *window)
 {
 	ft_memset(window, 0, sizeof(window));
 	window->mlx_ptr = mlx_init();
 	if (!window->mlx_ptr)
 		return (window_init_fail(window));
-	window->win_ptr = mlx_new_window(window->mlx_ptr, WINDOW_WIDTH, \
-										WINDOW_HEIGHT, "miniRT");
+	window->win_ptr = mlx_new_window(window->mlx_ptr, width, \
+										height, "miniRT");
 	if (!window->win_ptr)
 		return (window_init_fail(window));
-	window->image.img_ptr = mlx_new_image(window->mlx_ptr, WINDOW_WIDTH, \
-											WINDOW_HEIGHT);
+	window->image.img_ptr = mlx_new_image(window->mlx_ptr, width, \
+											height);
 	if (!window->image.img_ptr)
 		return (window_init_fail(window));
 	window->image.data = (uint32_t *)mlx_get_data_addr(window->image.img_ptr, \

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:12:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 22:32:12 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 20:10:07 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_vector3	v3_reflect(t_vector3 ray, t_vector3 axis)
 	);
 }
 
-t_vector3	v3_transform(t_vector3 v, const t_transform_matrix m)
+t_vector3	v3_transform(t_vector3 v, constt_tmat m)
 {
 	t_vector3	new;
 

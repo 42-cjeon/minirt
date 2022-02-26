@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:56 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 18:13:49 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 18:48:58 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 #include "parser.h"
 
-static int	parse_plane_fail(t_plane *pl)
+static int	parse_plane_fail(t_list *node, t_plane *pl, int result)
 {
+	free(node);
 	free(pl);
-	return (P_ERR_SYNTEX);
+	return (result);
 }
 
 static int	parse_plane_part(t_context *context, t_plane *pl)
@@ -28,31 +29,24 @@ static int	parse_plane_part(t_context *context, t_plane *pl)
 	if (parse_vector3(ignore_space(context), get_named_range(RNG_UNITV), \
 						&pl->dir))
 		return (throw_error(context, "plane->dir", P_T_UNITV));
-	if (parse_vector3(ignore_space(context), get_named_range(RNG_COLOR), \
-						&pl->shading.albedo))
-		return (throw_error(context, "plane->color", P_T_COLOR));
 	return (P_SUCCESS);
 }
 
-int	parse_plane(t_context *context, t_scene *scene)
+int	parse_plane(t_context *context)
 {
 	t_plane	*pl;
 	t_list	*node;
+	int		failure;
 
-	pl = malloc(sizeof(t_plane));
-	if (pl == NULL)
-		return (P_ERR_SYSCALL);
-	if (parse_plane_part(context, pl))
-		return (parse_plane_fail(pl));
+	pl = ft_calloc(1, sizeof(t_plane));
 	node = ft_lstnew(OBJ_PLANE, pl);
-	if (node == NULL)
-	{
-		free(pl);
-		return (P_ERR_SYSCALL);
-	}
-	ft_lstadd_front(&scene->obj_list, node);
-	pl->shading.albedo = v3_rescale(pl->shading.albedo, \
-										get_named_range(RNG_COLOR), \
-										get_named_range(RNG_RATIO));
+	if (node == NULL || pl == NULL)
+		reutrn (parse_plane_fail(pl, node, P_ERR_SYSCALL));
+	ft_lstadd_front(&context->scene->obj_list, node);
+	if (parse_plane_part(context, pl))
+		return (P_ERR_SYNTEX);
+	failure = parse_shading(context, &pl->shading);
+	if (failure)
+		return (failure);
 	return (parse_endl(context));
 }
