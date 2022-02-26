@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:24:20 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 01:02:12 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 03:55:01 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_color3	phong_spot_light(t_scene *scene, t_spot_light *light, \
 	t_color3	diffuse;
 	t_color3	specular;
 
-	ft_memset(&color, 0, sizeof(t_color3));
 	ray.origin = record->point;
 	ray.dir = v3_sub(light->origin, record->point);
 	dist = v3_length(ray.dir);
@@ -41,7 +40,7 @@ t_color3	phong_spot_light(t_scene *scene, t_spot_light *light, \
 	if (is_in_shadow(&ray, scene->obj_list, dist))
 		return (get_vector3(0, 0, 0));
 	cos_theta = v3_dot(v3_to_unit(v3_sub(record->point, light->origin)), light->dir);
-	if (cos_theta < cos(light->theta))
+	if (cos_theta < cos(light->theta / 2))
 		return (get_vector3(0, 0, 0));
 	cos_theta = v3_dot(ray.dir, record->normal);
 	if (cos_theta < 0.0)

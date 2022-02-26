@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:53:39 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 01:04:09 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 03:52:59 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,10 @@ int parse_shading(t_context *context, t_shading *shading)
 	failure = parse_surface(ignore_space(context), shading);
 	if (failure)
 		return (failure);
+	ignore_space(context);
 	if (shading->surf_type != SURF_CB && streq_part(context_peek(context), "nm:"))
 	{
-		failure = parse_texture(context, TXT_NMAP, &shading->nmap_name);
+		failure = parse_texture(context_pop(context, 3), TXT_NMAP, &shading->nmap_name);
 		if (failure)
 			return (failure);
 	}

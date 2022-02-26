@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:35:04 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 02:30:33 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 03:34:41 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ int	parse_point(t_context *context, double *d, int is_neg, t_range range)
 		else
 			*d += (double)(*context_peek(context) - '0') / f;
 		f *= 10;
-		if (!is_in_range(*d, range))
-			return (P_ERR_SYNTEX);
+		
 		context_pop(context, 1);
 	}
+	if (!is_in_range(*d, range))
+		return (P_ERR_SYNTEX);
 	return (P_SUCCESS);
 }
 
@@ -74,10 +75,10 @@ int	parse_double(t_context *context, t_range range, double *d)
 			*d -= (double)(*context_peek(context) - '0');
 		else
 			*d += (double)(*context_peek(context) - '0');
-		if (!is_in_range(*d, range))
-			return (P_ERR_SYNTEX);
 		context_pop(context, 1);
 	}
+	if (!is_in_range(*d, range))
+		return (P_ERR_SYNTEX);
 	if (*context_peek(context) == '.')
 		return (parse_point(context_pop(context, 1), d, is_neg, range));
 	return (P_SUCCESS);
@@ -102,9 +103,9 @@ int	parse_int(t_context *context, t_range range, int *k)
 			*k -= (*context_peek(context) - '0');
 		else
 			*k += (*context_peek(context) - '0');
-		if (!is_in_range(*k, range))
-			return (P_ERR_SYNTEX);
 		context_pop(context, 1);
 	}
+	if (!is_in_range(*k, range))
+			return (P_ERR_SYNTEX);
 	return (P_SUCCESS);
 }

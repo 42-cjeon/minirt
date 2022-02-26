@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 00:59:57 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 03:35:23 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	parse_line(t_context *context)
 	else if (streq_part(context_peek(context), "C"))
 		return (parse_camera(context_pop(context, 1)));
 	else if (streq_part(context_peek(context), "li"))
-		return (parse_spot_light(context_pop(context, 1)));
+		return (parse_spot_light(context_pop(context, 2)));
 	else if (streq_part(context_peek(context), "sp"))
 		return (parse_sphere(context_pop(context, 2)));
 	else if (streq_part(context_peek(context), "cy"))
@@ -109,7 +109,7 @@ int	parse_scene(char *scene_name, t_scene *scene, t_window *window)
 	context.window = window;
 	context.scene = scene;
 	errno = 0;
-	status = P_SUCCESS;
+	status = P_CONTINUE;
 	while (status == P_CONTINUE)
 		status = parse_next_line(scene_name, scene_fd, &context);
 	if (errno)
