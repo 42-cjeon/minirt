@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 18:43:04 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 02:31:13 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 enum	e_parser_status
 {
 	P_SUCCESS,
+	P_CONTINUE,
 	P_ERR_SYNTEX,
-	P_ERR_SYSCALL,
-	P_END
+	P_ERR_MISSING,
+	P_ERR_SYSCALL
 };
 
 enum	e_err_type
@@ -50,6 +51,7 @@ t_context	*ignore_space(t_context *context);
 t_context	*context_pop(t_context *context, int k);
 char		*context_peek(t_context *context);
 int			parse_double(t_context *context, t_range range, double *d);
+int			parse_int(t_context *context, t_range range, int *k);
 int			parse_endl(t_context *context);
 int			parse_vector3(t_context *context, t_range range, t_vector3 *v);
 int			parse_ambient(t_context *context, t_scene *scene);
@@ -61,4 +63,5 @@ int			parse_sphere(t_context *context, t_scene *scene);
 int			parse_scene(char *scene_name, t_scene *scene);
 int			print_parse_error(char *filename, t_context *context);
 int			throw_error(t_context *context, char *err_name, int err_type);
+
 #endif

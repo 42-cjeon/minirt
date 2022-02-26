@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:07:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/25 20:44:06 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 02:30:53 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,18 @@ typedef struct s_camera
 	double		fov_w;
 	double		fov_h;
 	double		focal_len;
-	double		near;
-	double		far;
 }	t_camera;
 
 typedef struct s_scene
 {
 	t_camera	camera;
+	t_ambient	ambient;
+	int			window_height;
+	int			window_width;
+	double		kld;
+	double		kldd;
 	t_list		*obj_list;	
 	t_list		*light_list;
-	t_ambient	ambient;
 }	t_scene;
 
 int					draw_scene(t_window *window, t_scene *scene);

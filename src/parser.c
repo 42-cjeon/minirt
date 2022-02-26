@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/24 18:43:48 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 02:46:59 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,29 @@
 #include "scene.h"
 #include "utils.h"
 
+int	parse_window_size(t_context *context, t_scene *scene)
+{
+	if (parse_int(ignore_space(context), get_range(RANGE_CLOSED, 400, 2000), &scene->window_width))
+		return (throw_error(context, "window_size->width", P_T_WINDOW));
+	if (parse_int(ignore_space(context), get_range(RANGE_CLOSED, 400, 2000), &scene->window_height))
+		return (throw_error(context, "window_size->height", P_T_WINDOW));
+	return (parse_endl(context));
+}
+
+int	parse_light(t_context *context, t_scene *scene)
+{
+	if (parse_int)
+}
+
 static int	parse_line(t_context *context, t_scene *scene)
 {
 	ignore_space(context);
-	if (streq_part(context_peek(context), "A"))
+	if (streq_part(context_peek(context), "W"))
+		return (parse_window_size(context_pop(context, 1), scene));
+	else if (streq_part(context_peek(context), "A"))
 		return (parse_ambient(context_pop(context, 1), scene));
 	else if (streq_part(context_peek(context), "L"))
-		return (parse_point_light(context_pop(context, 1), scene));
+		return (parse_light(context_pop(context, 1), scene));
 	else if (streq_part(context_peek(context), "C"))
 		return (parse_camera(context_pop(context, 1), scene));
 	else if (streq_part(context_peek(context), "sp"))

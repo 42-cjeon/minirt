@@ -6,12 +6,12 @@
 #    By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/24 18:45:34 by cjeon             #+#    #+#              #
-#    Updated: 2022/02/24 20:37:04 by cjeon            ###   ########.fr        #
+#    Updated: 2022/02/26 01:05:42 by cjeon            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror#-g -fsanitize=address -fsanitize=undefined
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
 NAME = minirt
 INCLUDE_ROOT = include

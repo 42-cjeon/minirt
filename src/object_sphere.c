@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:12 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/25 21:21:43 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 01:49:44 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,18 @@ int	check_sphere_line_root(const t_ray *ray, t_sphere *sphere, \
 	
 	//printf("U=%.3lf, V=%.3lf\n", u, v);
 	//printf("X=%d, Y=%d\n", (int)(u * (texture.width - 1)), (int)(v * (texture.height - 1)));
+	record->shading = sphere->shading;
+	
 	uint32_t k = texture.data[(int)(v * (texture.height - 1)) * texture.width + (int)(u * (texture.width - 1))];
 	record->shading.albedo = color_to_v3(k);
-	/*
-	uint32_t bump_map = nmap.data[(int)(v * (texture.height - 1)) * texture.width + (int)(u * (texture.width - 1))];
+	
+	uint32_t bump_map = nmap.data[(int)(v * (nmap.height - 1)) * nmap.width + (int)(u * (nmap.width - 1))];
 	t_vector3 bm = v3_to_unit(v3_sub_scaler(v3_mul_scaler(color_to_v3(bump_map), 2), 1));
 	t_vector3	tn = v3_cross(get_vup(record->normal), record->normal);
 	t_vector3	bi = v3_cross(record->normal, tn);
 	record->normal = v3_transform(bm, get_transform_matrix(&tn, &bi, &record->normal, &(t_vector3){0, 0, 0}));
-	v3_to_unit(record->normal);
-	*/
+	record->normal = v3_to_unit(record->normal);
+
 #elif TEXTURE_CB
 
 	t_vector3	p = v3_to_unit(v3_sub(record->point, sphere->origin));

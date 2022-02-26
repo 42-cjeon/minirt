@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:31:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/25 19:26:49 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/26 01:50:24 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ int	main(int argc, char **argv)
 	}
 	if (parse_scene(argv[1], &scene))
 		return (RT_ERR_FILE);
-	read_texture("wall.xpm", &window, &texture);
-	read_texture("wall_nmap.xpm", &window, &nmap);
 	if (get_minirt_window(&window) || register_handler(&window))
 		return (RT_ERR_MLX);
+	read_texture("wall.xpm", &window, &texture);
+	read_texture("wall_nmap.xpm", &window, &nmap);
 	if (draw_scene(&window, &scene))
 		return (RT_ERR_SYSCALL);
 	mlx_put_image_to_window(window.mlx_ptr, window.win_ptr, \
