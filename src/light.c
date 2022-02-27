@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 00:54:26 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 21:26:41 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 #include "utils.h"
 #include "texture.h"
 
-t_color3	phong_shading(t_scene *scene, t_list *light, t_hit_record *record, t_color3 color)
+t_color3	phong_shading(t_scene *scene, t_list *light, \
+							t_hit_record *record, t_color3 color)
 {
 	if (light->type == LIG_SPOT)
-		return (phong_spot_light(scene, (t_spot_light *)light->content, record, color));
+		return (phong_spot_light(scene, (t_spot_light *)light->content, \
+									record, color));
 	return (get_vector3(0.5, 0.5, 0.5));
 }
 
@@ -32,7 +34,8 @@ t_color3	calc_color(t_scene *scene, t_hit_record *record)
 
 	handle_nmap(scene, record);
 	surf_color = get_surf_color(scene, record);
-	mixed_color = v3_mul_scaler(v3_mul(surf_color, scene->ambient.color), scene->ambient.ratio);
+	mixed_color = v3_mul_scaler(v3_mul(surf_color, scene->ambient.color), \
+										scene->ambient.ratio);
 	light = scene->light_list;
 	while (light)
 	{

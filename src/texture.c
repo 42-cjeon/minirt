@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:27:34 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 14:21:19 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 21:54:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ t_mlx_image	*load_xpm_image(t_window *window, char *name)
 	img = malloc(sizeof(t_mlx_image));
 	if (img == NULL)
 		return (NULL);
-	img->img_ptr = mlx_xpm_file_to_image(window->mlx_ptr, name, &img->width, &img->height);
+	img->img_ptr = mlx_xpm_file_to_image(window->mlx_ptr, name, \
+											&img->width, &img->height);
 	if (img->img_ptr == NULL)
 	{
 		free(img);
 		return (NULL);
 	}
-	img->data = (uint32_t *)mlx_get_data_addr(img->img_ptr, &img->bpp, &img->line_size, &img->endian);
+	img->data = (uint32_t *)mlx_get_data_addr(img->img_ptr, &img->bpp, \
+												&img->line_size, &img->endian);
 	if (img->data == NULL)
 	{
 		free(img);
@@ -43,6 +45,7 @@ t_mlx_image	*search_texture(t_scene *scene, char *name, int type)
 {
 	t_list		*txt;
 	t_mlx_image	*img;
+
 	txt = scene->texture_list;
 	while (txt)
 	{
@@ -86,8 +89,10 @@ t_vector3	get_surf_color(t_scene *scene, t_hit_record *record)
 	}
 	if (record->shading.surf_type == SURF_TEXTURE)
 	{
-		img = search_texture(scene, record->shading.surf.texture_name, TXT_TEXTURE);
-		return (color_to_v3(get_texture_pixel(img, record->shading.u, record->shading.v)));
+		img = search_texture(scene, record->shading.surf.texture_name, \
+								TXT_TEXTURE);
+		return (color_to_v3(get_texture_pixel(img, record->shading.u, \
+								record->shading.v)));
 	}
 	else
 		return (get_vector3(0.5, 0.5, 0.5));

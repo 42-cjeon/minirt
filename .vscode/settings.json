@@ -11,6 +11,7 @@
 		"libft.h": "c",
 		"mlx.h": "c",
 		"color.h": "c",
-		"math.h": "c"
+		"math.h": "c",
+		"stdlib.h": "c"
 	}
 }
