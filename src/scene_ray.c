@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 22:33:11 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 01:00:43 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 16:58:47 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ t_vector3	get_local_ray_dir(t_scene *scene, double y, double x)
 	double		fov_h;
 
 	width = tan(scene->camera.fov_w / 2) * scene->camera.focal_len;
-	fov_h = scene->camera.fov_w * scene->window_height / scene->window_width;
+	fov_h = scene->camera.fov_w * WINDOW_HEIGHT / WINDOW_WIDTH;
 	height = tan(fov_h / 2) * scene->camera.focal_len;
 	dir.x = scaler_rescale(x + 0.5, \
-				get_range(RANGE_CLOSED, 0, scene->window_width - 1), \
+				get_range(RANGE_CLOSED, 0, WINDOW_WIDTH - 1), \
 				get_range(RANGE_CLOSED, -width, width));
 	dir.y = scaler_rescale(y + 0.5, \
-				get_range(RANGE_CLOSED, 0, scene->window_height - 1), \
+				get_range(RANGE_CLOSED, 0, WINDOW_HEIGHT - 1), \
 				get_range(RANGE_CLOSED, height, -height));
 	dir.z = 1;
 	return (dir);

@@ -6,20 +6,24 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:09 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 00:56:23 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 15:54:51 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
-
+#include <assert.h>
+#include <stdio.h>
 #include "scene.h"
 
 void	get_cylinder_uv(t_cylinder *cylinder, t_hit_record *record, double dd)
-{	
+{
 	record->shading.u = 0.5 + atan2(record->normal.x, record->normal.z) / (2 * M_PI);
-	record->shading.v = dd;
+	record->shading.v = dd / cylinder->height;
 	if (cylinder->shading.surf_type == SURF_CB)
-		record->shading.u *= 2 * M_PI * cylinder->radius;
+	{
+		record->shading.u *= 16;
+		record->shading.v *= cylinder->height;
+	}
 }
 
 int	check_cylinder_line_root(const t_ray *ray, t_cylinder *cylinder, \
@@ -71,15 +75,18 @@ int	hit_cylinder(const t_ray *ray, t_cylinder *cylinder, t_hit_record *record)
 {
 	t_quadratic_eq	eq;
 	double			root;
-	int				is_hit;
 
 	eq = get_cylinder_line_eq(ray, cylinder);
 	if (!quad_has_root(&eq))
 		return (FALSE);
-	is_hit = FALSE;
 	root = quad_get_root(&eq, ROOT_ALPHA);
-	is_hit |= check_cylinder_line_root(ray, cylinder, root, record);
+	if (check_cylinder_line_root(ray, cylinder, root, record))
+		return (TRUE);
 	root = quad_get_root(&eq, ROOT_BETA);
-	is_hit |= check_cylinder_line_root(ray, cylinder, root, record);
-	return (is_hit);
+	if (check_cylinder_line_root(ray, cylinder, root, record))
+	{
+		record->normal = v3_mul_scaler(record->normal, -1);
+		return (TRUE);
+	}
+	return (FALSE);
 }

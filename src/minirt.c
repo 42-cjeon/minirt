@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 11:31:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 03:30:25 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 14:07:41 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 		ft_puterror("usage: ./minirt filename.rt");
 		return (RT_ERR_ARG);
 	}
-	if (get_minirt_window(1920, 1080, &window) || register_handler(&window))
+	if (get_minirt_window(&window) || register_handler(&window))
 		return (RT_ERR_MLX);
 	if (parse_scene(argv[1], &scene, &window))
 		return (RT_ERR_FILE);

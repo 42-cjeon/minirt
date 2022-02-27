@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:48 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 00:58:20 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 15:51:45 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	parse_spot_light_part(t_context *context, t_spot_light *sl)
 		return (throw_error(context, "spotlight->origin", P_T_POINT));
 	if (parse_vector3(ignore_space(context), get_named_range(RNG_UNITV), &sl->dir))
 		return (throw_error(context, "spotlight->dir", P_T_UNITV));
+	sl->dir = v3_to_unit(sl->dir);
 	if (parse_double(ignore_space(context), get_range(RANGE_CLOSED, 0, 180), &sl->theta))
 		return (throw_error(context, "spotlight->theta", P_T_FOV));
 	sl->theta = sl->theta / 180 * M_PI;

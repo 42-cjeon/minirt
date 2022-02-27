@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:07:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 00:52:54 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 14:07:29 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct s_scene
 {
 	t_camera	camera;
 	t_ambient	ambient;
-	int			window_height;
-	int			window_width;
 	double		kld;
 	double		kldd;
 	t_list		*obj_list;	

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:24:20 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 03:55:01 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 16:44:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ t_color3	phong_spot_light(t_scene *scene, t_spot_light *light, \
 		return (get_vector3(0, 0, 0));
 	
 	diffuse = v3_mul(color, light->color);
-	diffuse = v3_mul_scaler(color, cos_theta);
+	diffuse = v3_mul_scaler(diffuse, cos_theta);
 	
 	t_vector3 refl = v3_reflect(ray.dir, record->normal);
-	double l = v3_dot(refl, v3_to_unit(record->point));
+	double l = v3_dot(refl, v3_to_unit(v3_sub(record->point, scene->camera.origin)));
 	specular = get_vector3(0, 0, 0);
 	if (l < 0)
 	{

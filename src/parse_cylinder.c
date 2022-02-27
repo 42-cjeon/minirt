@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 00:57:32 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 15:50:26 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	parse_cylinder_parts(t_context *context, t_cylinder *cy)
 	if (parse_vector3(ignore_space(context), get_named_range(RNG_UNITV), \
 						&cy->dir))
 		return (throw_error(context, "cylinder->dir", P_T_UNITV));
+	cy->dir = v3_to_unit(cy->dir);
 	if (parse_double(ignore_space(context), get_named_range(RNG_INF), \
 						&cy->radius))
 		return (throw_error(context, "cylinder->radius", P_T_DOUBLE));

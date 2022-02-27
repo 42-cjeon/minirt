@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:12 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 19:58:31 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 16:07:05 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@
 	else if  ((u % 2 == 0 && v % 2 == 1) || (u % 2 == 1 && v % 2 == 0))
 		record->shading.albedo = (t_color3){0, 0, 0};
 */
-
+#include <stdio.h>
 void	get_sphere_uv(t_sphere *sphere, t_hit_record *record)
 {
 	record->shading.u = (0.5 + (atan2(record->normal.x, record->normal.z) / (2 * M_PI)));
 	record->shading.v = (0.5 - (asin(record->normal.y) / M_PI));
 	if (sphere->shading.surf_type == SURF_CB)
 	{
-		record->shading.u *= 2 * M_PI * sphere->radius;
-		record->shading.v *= 2 * M_PI * sphere->radius;
+		record->shading.u *= 16;
+		record->shading.v *= 8;
 	}
 }
 
@@ -73,15 +73,18 @@ int	hit_sphere(const t_ray *ray, t_sphere *sphere, t_hit_record *record)
 {
 	t_quadratic_eq	eq;
 	double			root;
-	int				is_hit;
 
 	eq = get_sphere_line_eq(ray, sphere);
 	if (!quad_has_root(&eq))
 		return (FALSE);
-	is_hit = FALSE;
 	root = quad_get_root(&eq, ROOT_ALPHA);
-	is_hit |= check_sphere_line_root(ray, sphere, root, record);
-	root = quad_get_root(&eq, ROOT_ALPHA);
-	is_hit |= check_sphere_line_root(ray, sphere, root, record);
-	return (is_hit);
+	if (check_sphere_line_root(ray, sphere, root, record))
+		return (TRUE);
+	root = quad_get_root(&eq, ROOT_BETA);
+	if (check_sphere_line_root(ray, sphere, root, record))
+	{
+		record->normal = v3_mul_scaler(record->normal, -1);
+		return (TRUE);
+	}
+	return (FALSE);
 }

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:56 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 00:58:53 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 15:52:06 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	parse_plane_part(t_context *context, t_plane *pl)
 	if (parse_vector3(ignore_space(context), get_named_range(RNG_UNITV), \
 						&pl->dir))
 		return (throw_error(context, "plane->dir", P_T_UNITV));
+	pl->dir = v3_to_unit(pl->dir);
 	return (P_SUCCESS);
 }
 

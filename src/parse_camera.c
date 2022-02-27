@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:51 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 00:59:31 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 15:51:01 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	parse_camera(t_context *context)
 	if (parse_vector3(ignore_space(context), get_named_range(RNG_UNITV), \
 						&context->scene->camera.dir))
 		return (throw_error(context, "camera->dir", P_T_UNITV));
+	context->scene->camera.dir = v3_to_unit(context->scene->camera.dir);
 	if (parse_double(ignore_space(context), get_named_range(RNG_FOV), \
 						&context->scene->camera.fov_w))
 		return (throw_error(context, "camera->fov", P_T_FOV));
