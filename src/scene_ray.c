@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 22:33:11 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 16:58:47 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/27 17:53:55 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,18 @@ t_tmat	get_transform_matrix(t_vector3 *xs, t_vector3 *ys, \
 
 t_vector3	get_global_ray_dir(t_scene *scene, t_vector3 local)
 {
-	t_vector3			vup;
-	t_vector3			xs;
-	t_vector3			ys;
-t_tmat	m;
+	t_vector3	vup;
+	t_vector3	xs;
+	t_vector3	ys;
+	t_vector3	zv;
+	t_tmat		m;
 
+	zv = get_vector3(0, 0, 0);
 	vup = get_vup(scene->camera.dir);
 	xs = v3_cross(vup, scene->camera.dir);
 	ys = v3_cross(scene->camera.dir, xs);
 	m = get_transform_matrix(&xs, &ys, &scene->camera.dir, \
-								&scene->camera.origin);
+								&zv);
 	return (v3_to_unit(v3_transform(local, m)));
 }
 
