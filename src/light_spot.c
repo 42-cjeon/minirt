@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:24:20 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 14:41:34 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 15:43:59 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ t_color3	phong_spot_diffuse(t_ray *ray, t_spot_light *light, \
 	double		cos_theta;
 
 	cos_theta = -v3_dot(ray->dir, light->dir);
-	if (cos_theta < cos(light->theta / 2))
+	if (cos_theta <= cos(light->theta))
 		return (get_vector3(0, 0, 0));
 	cos_theta = v3_dot(ray->dir, record->normal);
-	if (cos_theta < 0.0)
+	if (cos_theta <= 0.0)
 		return (get_vector3(0, 0, 0));
 	return (v3_mul_scaler(light->color, cos_theta));
 }

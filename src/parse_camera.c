@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:51 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 14:55:42 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 20:49:01 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 int	parse_camera(t_context *context)
 {
+	if (context->scene->components & SC_CAMERA)
+		return (throw_dup_error(context, "camera"));
+	context->scene->components |= SC_CAMERA;
 	if (parse_vector3(ignore_space(context), \
 		get_named_range(RNG_INF), &context->scene->camera.origin))
 		return (throw_error(context, "camera->origin", P_T_POINT));

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 15:03:28 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 20:52:42 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,6 @@
 #include "parser.h"
 #include "scene.h"
 #include "utils.h"
-
-int	parse_light(t_context *context)
-{
-	if (parse_double(ignore_space(context), \
-		get_named_range(RNG_POS), &context->scene->kld))
-		return (throw_error(context, "light->kld", P_T_POS));
-	if (parse_double(ignore_space(context), \
-		get_named_range(RNG_POS), &context->scene->kldd))
-		return (throw_error(context, "light->kldd", P_T_POS));
-	return (parse_endl(context));
-}
 
 static int	parse_line(t_context *context)
 {
@@ -57,13 +46,15 @@ static int	parse_line(t_context *context)
 
 static int	open_scene(char *scene_name)
 {
-	int	fd;
+	char	buf[512];
+	int		fd;
 
 	fd = open(scene_name, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_perror("miniRT");
-		return (P_ERR_SYSCALL);
+		ft_strlcpy(buf, "miniRT: ", 512);
+		ft_strlcat(buf, scene_name, 512);
+		ft_perror(buf);
 	}
 	return (fd);
 }
@@ -80,10 +71,32 @@ static int	parse_next_line(char *scene_name, int scene_fd, t_context *context)
 	free(context->line);
 	if (result == P_ERR_SYNTEX)
 		print_parse_error(scene_name, context);
+	else if (result == P_ERR_DUP)
+		print_dup_error(scene_name, context);
 	context->row++;
 	if (result == P_SUCCESS)
 		result = P_CONTINUE;
 	return (result);
+}
+
+int	check_scene_components(char *scene_name, t_scene *scene)
+{
+	if (!(scene->components & SC_CAMERA))
+	{
+		print_component_error(scene_name, "camera");
+		return (P_ERR_MISSING);
+	}
+	if (!(scene->components & SC_AMBIENT))
+	{
+		print_component_error(scene_name, "ambient");
+		return (P_ERR_MISSING);
+	}
+	if (!(scene->components & SC_LIGHT))
+	{
+		print_component_error(scene_name, "light");
+		return (P_ERR_MISSING);
+	}
+	return (P_SUCCESS);
 }
 
 int	parse_scene(char *scene_name, t_scene *scene, t_window *window)
@@ -108,5 +121,7 @@ int	parse_scene(char *scene_name, t_scene *scene, t_window *window)
 		ft_perror("miniRT");
 		return (P_ERR_SYSCALL);
 	}
+	if (status == P_SUCCESS && check_scene_components(scene_name, scene))
+		return (P_ERR_MISSING);
 	return (status);
 }

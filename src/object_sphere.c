@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:12 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 13:39:00 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 17:55:03 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 void	get_sphere_uv(t_sphere *sphere, t_hit_record *record)
 {
-	record->shading.u = (0.5 + \
+	record->shading.u = (0.5 - \
 		(atan2(record->normal.x, record->normal.z) / (2 * M_PI)));
 	record->shading.v = (0.5 - \
 		(asin(record->normal.y) / M_PI));

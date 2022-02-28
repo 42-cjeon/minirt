@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 14:47:05 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 20:43:53 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ enum	e_parser_status
 	P_CONTINUE,
 	P_ERR_SYNTEX,
 	P_ERR_MISSING,
+	P_ERR_DUP,
 	P_ERR_SYSCALL
 };
 
@@ -71,5 +72,7 @@ int			parse_texture(t_context *context, int type, char **pstr);
 int			parse_vector3(t_context *context, t_range range, t_vector3 *v);
 int			print_parse_error(char *filename, t_context *context);
 int			throw_error(t_context *context, char *err_name, int err_type);
-
+int			throw_dup_error(t_context *context, char *component);
+void		print_component_error(char *scene_name, char *component);
+void		print_dup_error(char *filename, t_context *context);
 #endif

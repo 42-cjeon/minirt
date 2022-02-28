@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:48 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 14:59:04 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 20:49:21 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 
 int	parse_ambient(t_context *context)
 {
+	if (context->scene->components & SC_AMBIENT)
+		return (throw_dup_error(context, "ambient"));
+	context->scene->components |= SC_AMBIENT;
 	if (parse_double(ignore_space(context), \
 		get_named_range(RNG_RATIO), &context->scene->ambient.ratio))
 		return (throw_error(context, "ambient->ratio", P_T_RATIO));
@@ -76,5 +79,19 @@ int	parse_spot_light(t_context *context)
 		v3_rescale(sl->color, \
 			get_named_range(RNG_COLOR), \
 			get_named_range(RNG_RATIO));
+	return (parse_endl(context));
+}
+
+int	parse_light(t_context *context)
+{
+	if (context->scene->components & SC_LIGHT)
+		return (throw_dup_error(context, "light"));
+	context->scene->components |= SC_LIGHT;
+	if (parse_double(ignore_space(context), \
+		get_named_range(RNG_POS), &context->scene->kld))
+		return (throw_error(context, "light->kld", P_T_POS));
+	if (parse_double(ignore_space(context), \
+		get_named_range(RNG_POS), &context->scene->kldd))
+		return (throw_error(context, "light->kldd", P_T_POS));
 	return (parse_endl(context));
 }

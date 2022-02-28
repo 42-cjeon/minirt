@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 12:07:38 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 13:48:39 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 20:26:04 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "light.h"
 # include "objects.h"
 
-# define CAMERA_NEAR (1e-5)
+# define CAMERA_NEAR (1e-3)
 # define CAMERA_FAR (1e+5)
 
 typedef struct s_camera
@@ -30,8 +30,16 @@ typedef struct s_camera
 	double		focal_len;
 }	t_camera;
 
+enum e_scene_components
+{
+	SC_CAMERA = 1,
+	SC_AMBIENT = 2,
+	SC_LIGHT = 4,
+};
+
 typedef struct s_scene
 {
+	int			components;
 	t_camera	camera;
 	t_ambient	ambient;
 	double		kld;
