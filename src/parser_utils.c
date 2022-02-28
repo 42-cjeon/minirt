@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 15:52:10 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 01:00:08 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 14:47:08 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	print_parse_error(char *filename, t_context *context)
 		"double[0,1]",
 		"double(0,180)",
 		"string",
-		"int[400,2000]",
 		"double[0,INF]"
 	};
 

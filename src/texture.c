@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:27:34 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 21:54:52 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 14:28:25 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ t_mlx_image	*load_xpm_image(t_window *window, char *name)
 	img = malloc(sizeof(t_mlx_image));
 	if (img == NULL)
 		return (NULL);
-	img->img_ptr = mlx_xpm_file_to_image(window->mlx_ptr, name, \
-											&img->width, &img->height);
+	img->img_ptr = \
+		mlx_xpm_file_to_image(window->mlx_ptr, name, \
+							&img->width, &img->height);
 	if (img->img_ptr == NULL)
 	{
 		free(img);
 		return (NULL);
 	}
 	img->data = (uint32_t *)mlx_get_data_addr(img->img_ptr, &img->bpp, \
-												&img->line_size, &img->endian);
+											&img->line_size, &img->endian);
 	if (img->data == NULL)
 	{
 		free(img);
@@ -102,16 +103,16 @@ void	handle_nmap(t_scene	*scene, t_hit_record *record)
 {
 	t_mlx_image	*nmap;
 	t_vector3	nm;
-	t_vector3	zerov;
 	t_vector3	tn;
 	t_vector3	bi;
 
 	if (record->shading.nmap_name == NULL)
 		return ;
 	nmap = search_texture(scene, record->shading.nmap_name, TXT_NMAP);
-	nm = v3_sub_scaler(v3_mul_scaler(color_to_v3(get_texture_pixel(nmap, record->shading.u, record->shading.v)), 2), 1);
+	nm = color_to_v3(\
+			get_texture_pixel(nmap, record->shading.u, record->shading.v));
+	nm = v3_sub_scaler(v3_mul_scaler(nm, 2), 1);
 	tn = v3_cross(get_vup(record->normal), record->normal);
 	bi = v3_cross(record->normal, tn);
-	zerov = get_vector3(0, 0, 0);
-	record->normal = v3_transform(nm, get_transform_matrix(&tn, &bi, &record->normal, &zerov));
+	record->normal = v3_transform(nm, get_tmat(&tn, &bi, &record->normal));
 }

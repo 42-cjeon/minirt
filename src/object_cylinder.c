@@ -6,18 +6,18 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:09 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 15:54:51 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 14:44:27 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
-#include <assert.h>
-#include <stdio.h>
+
 #include "scene.h"
 
 void	get_cylinder_uv(t_cylinder *cylinder, t_hit_record *record, double dd)
 {
-	record->shading.u = 0.5 + atan2(record->normal.x, record->normal.z) / (2 * M_PI);
+	record->shading.u = 0.5 + atan2(record->normal.x, record->normal.z) \
+						/ (2 * M_PI);
 	record->shading.v = dd / cylinder->height;
 	if (cylinder->shading.surf_type == SURF_CB)
 	{

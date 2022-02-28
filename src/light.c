@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 21:26:41 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 12:15:37 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ t_color3	calc_color(t_scene *scene, t_hit_record *record)
 	light = scene->light_list;
 	while (light)
 	{
-		mixed_color = v3_add(mixed_color, phong_shading(scene, light, record, surf_color));
+		mixed_color = v3_add(mixed_color, \
+							phong_shading(scene, light, record, surf_color));
 		light = light->next;
 	}
 	return (mixed_color);

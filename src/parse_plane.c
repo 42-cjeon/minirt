@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:56 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 15:52:06 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 15:00:14 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ static int	parse_plane_fail(t_list *node, t_plane *pl, int result)
 
 static int	parse_plane_part(t_context *context, t_plane *pl)
 {
-	if (parse_vector3(ignore_space(context), get_named_range(RNG_INF), \
-						&pl->origin))
+	if (parse_vector3(ignore_space(context), \
+		get_named_range(RNG_INF), &pl->origin))
 		return (throw_error(context, "plane->origin", P_T_POINT));
-	if (parse_vector3(ignore_space(context), get_named_range(RNG_UNITV), \
-						&pl->dir))
+	if (parse_vector3(ignore_space(context), \
+		get_named_range(RNG_UNITV), &pl->dir) \
+		|| v3_equal(pl->dir, get_vector3(0, 0, 0)))
 		return (throw_error(context, "plane->dir", P_T_UNITV));
 	pl->dir = v3_to_unit(pl->dir);
 	return (P_SUCCESS);

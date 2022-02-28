@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 17:46:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 01:03:47 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 13:38:01 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "vector3.h"
 # include "libft.h"
+
+# define PLANE_SIZE 10
 
 typedef struct s_quadratic_eq
 {

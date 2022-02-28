@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 14:06:45 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 15:03:28 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
 
 int	parse_light(t_context *context)
 {
-	if (parse_double(ignore_space(context), get_named_range(RNG_POS), &context->scene->kld))
+	if (parse_double(ignore_space(context), \
+		get_named_range(RNG_POS), &context->scene->kld))
 		return (throw_error(context, "light->kld", P_T_POS));
-	if (parse_double(ignore_space(context), get_named_range(RNG_POS), &context->scene->kldd))
+	if (parse_double(ignore_space(context), \
+		get_named_range(RNG_POS), &context->scene->kldd))
 		return (throw_error(context, "light->kldd", P_T_POS));
 	return (parse_endl(context));
 }

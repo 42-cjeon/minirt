@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:12:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 01:00:27 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 13:49:03 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ t_vector3	v3_transform(t_vector3 v, const t_tmat m)
 {
 	t_vector3	new;
 
-	new.x = v.x * m[0][0] + v.y * m[1][0] + v.z * m[2][0] + m[3][0];
-	new.y = v.x * m[0][1] + v.y * m[1][1] + v.z * m[2][1] + m[3][1];
-	new.z = v.x * m[0][2] + v.y * m[1][2] + v.z * m[2][2] + m[3][2];
+	new.x = v.x * m[0][0] + v.y * m[1][0] + v.z * m[2][0];
+	new.y = v.x * m[0][1] + v.y * m[1][1] + v.z * m[2][1];
+	new.z = v.x * m[0][2] + v.y * m[1][2] + v.z * m[2][2];
 	return (new);
 }

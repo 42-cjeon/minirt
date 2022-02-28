@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 22:33:11 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/27 17:53:55 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 13:48:23 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,9 @@ t_vector3	get_local_ray_dir(t_scene *scene, double y, double x)
 	return (dir);
 }
 
-t_tmat	get_transform_matrix(t_vector3 *xs, t_vector3 *ys, \
-											t_vector3 *zs, t_vector3 *os)
+t_tmat	get_tmat(t_vector3 *xs, t_vector3 *ys, t_vector3 *zs)
 {
-	static double	m[4][3];
+	static double	m[3][3];
 
 	m[0][0] = xs->x;
 	m[0][1] = xs->y;
@@ -73,9 +72,6 @@ t_tmat	get_transform_matrix(t_vector3 *xs, t_vector3 *ys, \
 	m[2][0] = zs->x;
 	m[2][1] = zs->y;
 	m[2][2] = zs->z;
-	m[3][0] = os->x;
-	m[3][1] = os->y;
-	m[3][2] = os->z;
 	return (m);
 }
 
@@ -84,15 +80,12 @@ t_vector3	get_global_ray_dir(t_scene *scene, t_vector3 local)
 	t_vector3	vup;
 	t_vector3	xs;
 	t_vector3	ys;
-	t_vector3	zv;
 	t_tmat		m;
 
-	zv = get_vector3(0, 0, 0);
 	vup = get_vup(scene->camera.dir);
 	xs = v3_cross(vup, scene->camera.dir);
 	ys = v3_cross(scene->camera.dir, xs);
-	m = get_transform_matrix(&xs, &ys, &scene->camera.dir, \
-								&zv);
+	m = get_tmat(&xs, &ys, &scene->camera.dir);
 	return (v3_to_unit(v3_transform(local, m)));
 }
 

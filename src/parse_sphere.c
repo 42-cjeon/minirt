@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:34:59 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 19:10:39 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/02/28 15:02:10 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static int	parse_sphere_fail(t_list *node, t_sphere *sp, int result)
 
 static int	parse_sphere_part(t_context *context, t_sphere *sp)
 {
-	if (parse_vector3(ignore_space(context), get_named_range(RNG_INF), \
-						&sp->origin))
+	if (parse_vector3(ignore_space(context), \
+		get_named_range(RNG_INF), &sp->origin))
 		return (throw_error(context, "sphere->origin", P_T_POINT));
-	if (parse_double(ignore_space(context), get_named_range(RNG_INF), \
-						&sp->radius))
+	if (parse_double(ignore_space(context), \
+		get_named_range(RNG_INF), &sp->radius))
 		return (throw_error(context, "sphere->radius", P_T_DOUBLE));
 	return (P_SUCCESS);
 }
