@@ -1,2 +1,3 @@
-# ignore visual studio code's settings
+# ignore visual studio code settings
 .vscode
+**/.DS_Store
