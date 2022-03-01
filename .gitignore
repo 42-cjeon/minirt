@@ -2,4 +2,4 @@
 .vscode
 **/.DS_Store
 # too big texture
-texture/earth10k.xpm
+textures/earth10k.xpm
