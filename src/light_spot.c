@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:24:20 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 15:43:59 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/01 14:33:35 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_color3	phong_spot_light(t_scene *scene, t_spot_light *light, \
 		return (get_vector3(0, 0, 0));
 	specular = phong_spot_specular(scene, light, record, &ray);
 	color = v3_mul(v3_add(diffuse, specular), surf_color);
+	color = v3_mul_scaler(color, light->ratio);
 	color = v3_mul_scaler(color, \
 					1 / (1.0 + scene->kld * dist + scene->kldd * dist * dist));
 	return (color);

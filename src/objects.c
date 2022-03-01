@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:23:53 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 20:18:58 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/01 14:09:15 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	hit_object(const t_ray *ray, t_list *list, t_hit_record *record)
 			is_hit |= hit_cylinder(ray, (t_cylinder *)list->content, record);
 		if (list->type == OBJ_PLANE)
 			is_hit |= hit_plane(ray, (t_plane *)list->content, record);
+		if (list->type == OBJ_CONE)
+			is_hit |= hit_cone(ray, (t_cone *)list->content, record);
 		list = list->next;
 	}
 	return (is_hit);

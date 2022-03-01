@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/03/01 13:28:09 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/01 14:06:19 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_context	*ignore_space(t_context *context);
 int			parse_ambient(t_context *context);
 int			parse_camera(t_context *context);
 int			parse_cylinder(t_context *context);
+int			parse_cone(t_context *context);
 int			handle_sign(t_context *context);
 int			parse_double(t_context *context, t_range range, double *d);
 int			parse_endl(t_context *context);

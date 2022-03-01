@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 20:52:42 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/01 14:10:50 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static int	parse_line(t_context *context)
 		return (parse_cylinder(context_pop(context, 2)));
 	else if (streq_part(context_peek(context), "pl"))
 		return (parse_plane(context_pop(context, 2)));
+	else if (streq_part(context_peek(context), "cn"))
+		return (parse_cone(context_pop(context, 2)));
 	else if (streq_part(context_peek(context), "#"))
 		return (P_SUCCESS);
 	else if (streq(context_peek(context), "\n"))
