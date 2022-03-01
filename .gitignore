@@ -1,3 +1,5 @@
 # ignore visual studio code settings
 .vscode
 **/.DS_Store
+# too big texture
+texture/earth10k.xpm
