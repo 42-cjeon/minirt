@@ -6,12 +6,12 @@
 #    By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/24 18:45:34 by cjeon             #+#    #+#              #
-#    Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr        #
+#    Updated: 2022/03/02 16:30:31 by cjeon            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g# -fsanitize=address -fsanitize=undefined
+CFLAGS = -Wall -Wextra -Werror
 
 NAME = minirt
 INCLUDE_ROOT = include
@@ -65,6 +65,8 @@ fclean : clean
 	make -C $(LIBFT_ROOT) fclean
 	rm -f $(NAME)
 
+bonus : all
+
 re : fclean all
 
 norm :
@@ -76,4 +78,4 @@ norm :
 	@echo "[-] check libft"
 	@$(MAKE) -C $(LIBFT_ROOT) norm
 
-.PHONY : all clean fclean re norm
+.PHONY : all clean fclean re bonus norm
