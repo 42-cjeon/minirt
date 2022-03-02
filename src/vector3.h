@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:41:18 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/26 20:12:02 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ typedef double (*t_tmat)[3];
 t_vector3	get_vector3(double x, double y, double z);
 int			v3_equal(t_vector3 u, t_vector3 v);
 t_vector3	v3_add(t_vector3 u, t_vector3 v);
-t_vector3	v3_add_scaler(t_vector3 v, double k);
+t_vector3	v3_add_scalar(t_vector3 v, double k);
 t_vector3	v3_sub(t_vector3 u, t_vector3 v);
-t_vector3	v3_sub_scaler(t_vector3 v, double k);
+t_vector3	v3_sub_scalar(t_vector3 v, double k);
 t_vector3	v3_mul(t_vector3 u, t_vector3 v);
-t_vector3	v3_mul_scaler(t_vector3 v, double k);
+t_vector3	v3_mul_scalar(t_vector3 v, double k);
+t_vector3	v3_sqaure(t_vector3 v);
+double		scalar_sqaure(double k);
 t_vector3	v3_to_unit(t_vector3 v);
 t_vector3	v3_cross(t_vector3 u, t_vector3 v);
 double		v3_length(t_vector3 v);
@@ -71,7 +73,7 @@ t_range		get_named_range(enum e_range_name name);
 t_range		get_range(enum e_range_type type, double min, double max);
 int			is_in_range(double d, t_range range);
 t_vector3	v3_rescale(t_vector3 v, t_range from, t_range to);
-double		scaler_rescale(double k, t_range from, t_range to);
+double		scalar_rescale(double k, t_range from, t_range to);
 t_vector3	v3_transform(t_vector3 v, const t_tmat m);
 
 #endif

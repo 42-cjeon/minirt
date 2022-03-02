@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 16:47:29 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 23:24:04 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_vector3	v3_to_unit(t_vector3 v)
 
 t_vector3	v3_rescale(t_vector3 v, t_range from, t_range to)
 {
-	v.x = scaler_rescale(v.x, from, to);
-	v.y = scaler_rescale(v.y, from, to);
-	v.z = scaler_rescale(v.z, from, to);
+	v.x = scalar_rescale(v.x, from, to);
+	v.y = scalar_rescale(v.y, from, to);
+	v.z = scalar_rescale(v.z, from, to);
 	return (v);
 }

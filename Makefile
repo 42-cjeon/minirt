@@ -6,7 +6,7 @@
 #    By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/24 18:45:34 by cjeon             #+#    #+#              #
-#    Updated: 2022/03/01 18:11:55 by cjeon            ###   ########.fr        #
+#    Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS := \
 	parse_cylinder.c parse_general.c parse_light.c parse_plane.c \
 	parse_shading.c parse_sphere.c parse_surface.c parser.c parser_utils.c \
 	scene.c scene_ray.c texture.c utils.c vector3_complex.c \
-	vector3_scaler.c vector3_simple.c vector3_utils.c parser_error.c \
+	vector3_scalar.c vector3_simple.c vector3_utils.c parser_error.c \
 	parse_cone.c object_cone.c
 SRCS := $(addprefix $(SRCS_ROOT)/, $(SRCS))
 OBJS = $(SRCS:.c=.o)

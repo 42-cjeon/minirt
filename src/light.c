@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 11:35:33 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 12:15:37 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_color3	calc_color(t_scene *scene, t_hit_record *record)
 
 	handle_nmap(scene, record);
 	surf_color = get_surf_color(scene, record);
-	mixed_color = v3_mul_scaler(v3_mul(surf_color, scene->ambient.color), \
+	mixed_color = v3_mul_scalar(v3_mul(surf_color, scene->ambient.color), \
 										scene->ambient.ratio);
 	light = scene->light_list;
 	while (light)

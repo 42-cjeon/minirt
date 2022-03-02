@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/06 19:50:41 by cjeon             #+#    #+#             */
-/*   Updated: 2022/03/01 16:52:45 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_color3	v3_lerp(t_color3 from, t_color3 to, double p)
 {
 	return (
 		v3_add (
-			v3_mul_scaler(from, 1.0 - p), \
-			v3_mul_scaler(to, p)
+			v3_mul_scalar(from, 1.0 - p), \
+			v3_mul_scalar(to, p)
 		)
 	);
 }

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:11:59 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/23 23:23:57 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 12:57:05 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,12 @@ t_vector3	v3_mul(t_vector3 u, t_vector3 v)
 	u.y *= v.y;
 	u.z *= v.z;
 	return (u);
+}
+
+t_vector3	v3_sqaure(t_vector3 v)
+{
+	v.x *= v.x;
+	v.y *= v.y;
+	v.z *= v.z;
+	return (v);
 }

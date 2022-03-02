@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:12:57 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 13:49:03 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_vector3	v3_reflect(t_vector3 ray, t_vector3 axis)
 {
 	return (
 		v3_sub (
-			v3_mul_scaler(axis, 2.0 * v3_dot(ray, axis)), \
+			v3_mul_scalar(axis, 2.0 * v3_dot(ray, axis)), \
 			ray
 		)
 	);

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:22:07 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 13:37:41 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ int	hit_plane(const t_ray *ray, t_plane *plane, t_hit_record *record)
 	if (dist <= CAMERA_NEAR || record->distance <= dist)
 		return (FALSE);
 	record->distance = dist;
-	record->point = v3_add(v3_mul_scaler(ray->dir, dist), ray->origin);
+	record->point = v3_add(v3_mul_scalar(ray->dir, dist), ray->origin);
 	if (v3_dot(ray->dir, plane->dir) < 0)
 		record->normal = plane->dir;
 	else
-		record->normal = v3_mul_scaler(plane->dir, -1);
+		record->normal = v3_mul_scalar(plane->dir, -1);
 	record->shading = plane->shading;
 	get_plane_uv(ray, plane, record);
 	return (TRUE);

@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 20:27:34 by cjeon             #+#    #+#             */
-/*   Updated: 2022/02/28 14:28:25 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	handle_nmap(t_scene	*scene, t_hit_record *record)
 	nmap = search_texture(scene, record->shading.nmap_name, TXT_NMAP);
 	nm = color_to_v3(\
 			get_texture_pixel(nmap, record->shading.u, record->shading.v));
-	nm = v3_sub_scaler(v3_mul_scaler(nm, 2), 1);
+	nm = v3_sub_scalar(v3_mul_scalar(nm, 2), 1);
 	tn = v3_cross(get_vup(record->normal), record->normal);
 	bi = v3_cross(record->normal, tn);
 	record->normal = v3_transform(nm, get_tmat(&tn, &bi, &record->normal));

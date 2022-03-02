@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 21:24:20 by cjeon             #+#    #+#             */
-/*   Updated: 2022/03/01 14:33:35 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 12:55:52 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_color3	phong_spot_specular(t_scene *scene, t_spot_light *light, \
 	ratio = -v3_dot(refl, \
 			v3_to_unit(v3_sub(record->point, scene->camera.origin)));
 	if (0 < ratio)
-		spec = v3_mul_scaler(light->color, \
+		spec = v3_mul_scalar(light->color, \
 					pow(ratio, record->shading.kss) * record->shading.ks);
 	else
 		spec = get_vector3(0, 0, 0);
@@ -53,7 +53,7 @@ t_color3	phong_spot_diffuse(t_ray *ray, t_spot_light *light, \
 	cos_theta = v3_dot(ray->dir, record->normal);
 	if (cos_theta <= 0.0)
 		return (get_vector3(0, 0, 0));
-	return (v3_mul_scaler(light->color, cos_theta));
+	return (v3_mul_scalar(light->color, cos_theta));
 }
 
 t_color3	phong_spot_light(t_scene *scene, t_spot_light *light, \
@@ -76,8 +76,8 @@ t_color3	phong_spot_light(t_scene *scene, t_spot_light *light, \
 		return (get_vector3(0, 0, 0));
 	specular = phong_spot_specular(scene, light, record, &ray);
 	color = v3_mul(v3_add(diffuse, specular), surf_color);
-	color = v3_mul_scaler(color, light->ratio);
-	color = v3_mul_scaler(color, \
+	color = v3_mul_scalar(color, light->ratio);
+	color = v3_mul_scalar(color, \
 					1 / (1.0 + scene->kld * dist + scene->kldd * dist * dist));
 	return (color);
 }
