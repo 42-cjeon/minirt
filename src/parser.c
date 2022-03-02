@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:07:47 by cjeon             #+#    #+#             */
-/*   Updated: 2022/03/01 14:10:50 by cjeon            ###   ########.fr       */
+/*   Updated: 2022/03/02 16:32:31 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	parse_scene(char *scene_name, t_scene *scene, t_window *window)
 	status = P_CONTINUE;
 	while (status == P_CONTINUE)
 		status = parse_next_line(scene_name, scene_fd, &context);
+	close(scene_fd);
 	if (errno)
 	{
 		ft_perror("miniRT");
