@@ -1,0 +1,18 @@
+A 0.1 255,255,255
+L 0.0 0.0
+C 0,0,0 0,0,1 60 1
+
+pl 0,10,0 0,-1,0 0 0 texture:textures/rock.xpm nm:textures/rock_nmap.xpm
+pl 0,-10,0 0,1,0 0 0 texture:textures/rock.xpm nm:textures/rock_nmap.xpm
+pl 0,0,80 0,0,-1 0 0 texture:textures/rock.xpm nm:textures/rock_nmap.xpm
+
+cy -10,-10,30 0,1,0 2 20 0 0 texture:textures/stone_col.xpm nm:textures/stone_col_nmap.xpm
+li -10,0,45 1,0,0 30 0.5 255,255,255
+cy -10,-10,60 0,1,0 2 20 0 0 texture:textures/stone_col.xpm nm:textures/stone_col_nmap.xpm
+li 10,0,45 -1,0,0 30 0.5 255,255,255
+cy 10,-10,30 0,1,0 2 20 0 0 texture:textures/stone_col.xpm nm:textures/stone_col_nmap.xpm
+cy 10,-10,60 0,1,0 2 20 0 0 texture:textures/stone_col.xpm nm:textures/stone_col_nmap.xpm
+sp 0,0,45 2 0.5 16 texture:textures/marble.xpm nm:textures/marble_nmap.xpm
+li 0,0,15 0,0,1 60 0.6 255,255,255
+cn 0,11,45 0,-1,0 2 9.5 0.5 32 texture:textures/cone.xpm
+cn 0,-11,45 0,1,0 2 9.5 0.5 32 texture:textures/cone.xpm
